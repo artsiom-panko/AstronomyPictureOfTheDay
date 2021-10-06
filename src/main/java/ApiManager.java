@@ -28,7 +28,7 @@ public class ApiManager {
 
             HttpRequest imageMetadataRequest = HttpRequest.newBuilder()
                     .uri(uri)
-                    .timeout(Duration.of(5, SECONDS))
+                    .timeout(Duration.of(15, SECONDS))
                     .GET()
                     .build();
 
@@ -43,7 +43,7 @@ public class ApiManager {
 
             String[] split = imageUrl.split("/");
             String fileNameAndExtension = split[split.length - 1];
-            filePathAndName = "D://" + fileNameAndExtension;
+            filePathAndName = "C:/Users/Public/Pictures" + fileNameAndExtension;
 
             ImageIO.write(image, "jpg", new File(filePathAndName));
 
