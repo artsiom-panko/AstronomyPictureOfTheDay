@@ -28,7 +28,7 @@ public class ApiManager {
 
             HttpRequest imageMetadataRequest = HttpRequest.newBuilder()
                     .uri(uri)
-                    .timeout(Duration.of(15, SECONDS))
+                    .timeout(Duration.of(25, SECONDS))
                     .GET()
                     .build();
 
