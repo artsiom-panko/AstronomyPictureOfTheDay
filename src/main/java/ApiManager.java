@@ -18,7 +18,9 @@ public class ApiManager {
     private static final String API_KEY = "5ym3WNJRFkk6Anuc618Qj5OWxL5pPLlyzdrMM8zp";
     private static final String URI = "https://api.nasa.gov/planetary/apod?";
 
-    public void test() {
+    public String getImage() {
+
+        String filePathAndName = "";
 
         try {
             URI uri = new URI(URI + "api_key=" + API_KEY);
@@ -41,13 +43,16 @@ public class ApiManager {
 
             String[] split = imageUrl.split("/");
             String fileNameAndExtension = split[split.length - 1];
+            filePathAndName = "D://" + fileNameAndExtension;
 
-            ImageIO.write(image, "jpg", new File("D://" + fileNameAndExtension));
+            ImageIO.write(image, "jpg", new File(filePathAndName));
 
             System.out.println("RESPONSE: " + response);
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
+
+        return filePathAndName;
     }
 }
