@@ -1,3 +1,5 @@
+package com.panko.astronomy_picture_of_the_day.service;
+
 import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -14,7 +16,7 @@ import java.time.Duration;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
-public class ApiManager {
+public class ApiService {
     private static final String API_KEY = "5ym3WNJRFkk6Anuc618Qj5OWxL5pPLlyzdrMM8zp";
     private static final String URI = "https://api.nasa.gov/planetary/apod?";
 
