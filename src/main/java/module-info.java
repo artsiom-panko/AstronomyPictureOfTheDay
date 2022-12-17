@@ -6,9 +6,11 @@ module com.example.astronomy_picture_of_the_day {
     requires java.net.http;
     requires com.sun.jna;
 
+    exports com.panko.astronomy_picture_of_the_day;
+    exports com.panko.astronomy_picture_of_the_day.entity;
+    exports com.panko.astronomy_picture_of_the_day.service;
+    exports com.panko.astronomy_picture_of_the_day.controller;
 
     opens com.panko.astronomy_picture_of_the_day to javafx.fxml;
-    exports com.panko.astronomy_picture_of_the_day;
-    exports com.panko.astronomy_picture_of_the_day.controller;
     opens com.panko.astronomy_picture_of_the_day.controller to javafx.fxml;
 }
