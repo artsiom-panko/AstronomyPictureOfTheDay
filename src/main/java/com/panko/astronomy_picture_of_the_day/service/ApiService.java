@@ -13,13 +13,12 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class ApiService {
     private static final Logger logger = System.getLogger(ApiService.class.getName());
-    private static final String API_KEY = "5ym3WNJRFkk6Anuc618Qj5OWxL5pPLlyzdrMM8zp";
-    private static final String URI = "https://api.nasa.gov/planetary/apod?";
+    private static final String NASA_URI = "https://api.nasa.gov/planetary/apod?";
 
-    public HttpResponse<String> sendApiService() {
+    public HttpResponse<String> sendApiService(String key) {
         try {
             HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(new URI(URI + "api_key=" + API_KEY))
+                    .uri(new URI(NASA_URI + "api_key=" + key))
                     .timeout(Duration.of(10, SECONDS))
                     .GET()
                     .build();
