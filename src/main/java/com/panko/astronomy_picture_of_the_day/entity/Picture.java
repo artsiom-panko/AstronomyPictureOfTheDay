@@ -1,10 +1,19 @@
 package com.panko.astronomy_picture_of_the_day.entity;
 
 public class Picture {
+    String type;
     String title;
     String imgUrl;
     String localPath;
     String description;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getTitle() {
         return title;

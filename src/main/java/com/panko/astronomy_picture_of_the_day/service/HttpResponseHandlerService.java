@@ -14,7 +14,12 @@ public class HttpResponseHandlerService {
 
         picture.setTitle(responseBody.getString("title"));
         picture.setImgUrl(responseBody.getString("hdurl"));
+        picture.setType(responseBody.getString("media_type"));
         picture.setDescription(responseBody.getString("explanation"));
+
+        if (!"image".equals(picture.getType())) {
+            throw new RuntimeException("Unsupported image type: " + picture.getType());
+        }
 
         return picture;
     }
