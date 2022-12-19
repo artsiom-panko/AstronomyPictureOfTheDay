@@ -10,7 +10,7 @@ public class MainService {
     private final ImageWriterService imageWriterService = new ImageWriterService();
     private final HttpResponseHandlerService responseHandlerService = new HttpResponseHandlerService();
 
-    private final static String NASA_API_KEY = "nasa.api.key";
+    public static final String NASA_API_KEY = "nasa.api.key";
 
     public Picture process() {
         String key = apiKeyService.readKey(NASA_API_KEY);
