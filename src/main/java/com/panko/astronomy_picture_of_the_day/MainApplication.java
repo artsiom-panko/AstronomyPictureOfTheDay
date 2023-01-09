@@ -1,23 +1,22 @@
 package com.panko.astronomy_picture_of_the_day;
 
+import com.panko.astronomy_picture_of_the_day.controller.RootController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class MainApplication extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-scene.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 460, 340);
-        stage.setTitle("Astronomy picture of the day");
-        stage.setScene(scene);
-        stage.show();
-    }
+    public static final String API_KEY_INPUT_SCENE = "api-key-input-scene";
+    public static final String IMAGE_DESCRIPTION_SCENE = "image-description-scene";
+
+    RootController rootController = new RootController();
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage rootStage) {
+        rootController.initRootScene(rootStage);
+        rootController.process();
     }
 }

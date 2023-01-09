@@ -13,4 +13,7 @@ module com.example.astronomy_picture_of_the_day {
 
     opens com.panko.astronomy_picture_of_the_day to javafx.fxml;
     opens com.panko.astronomy_picture_of_the_day.controller to javafx.fxml;
+    opens com.panko.astronomy_picture_of_the_day.service to javafx.fxml;
+    exports com.panko.astronomy_picture_of_the_day.util;
+    opens com.panko.astronomy_picture_of_the_day.util to javafx.fxml;
 }

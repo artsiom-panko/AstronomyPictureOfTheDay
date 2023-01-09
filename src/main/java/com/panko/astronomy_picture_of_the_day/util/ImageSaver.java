@@ -1,4 +1,4 @@
-package com.panko.astronomy_picture_of_the_day.service;
+package com.panko.astronomy_picture_of_the_day.util;
 
 import com.panko.astronomy_picture_of_the_day.entity.Picture;
 
@@ -8,16 +8,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class ImageWriterService {
-    private static final System.Logger logger = System.getLogger(ImageWriterService.class.getName());
+public class ImageSaver {
+    private static final System.Logger logger = System.getLogger(ImageSaver.class.getName());
 
-    public boolean writePictureToFolder(Picture picture) {
+    public boolean savePictureToFolder(Picture picture) {
         try {
             BufferedImage image = ImageIO.read(new URL(picture.getImgUrl()));
 
             String[] splitUrl = picture.getImgUrl().split("/");
             String fileNameAndFormat = splitUrl[splitUrl.length - 1];
-            String filePathAndName = "C:/Users/artsi/OneDrive/Pictures/space/" + fileNameAndFormat;
+            String filePathAndName = "C:/Users/artsi/Pictures/space/" + fileNameAndFormat;
             picture.setLocalPath(filePathAndName);
 
             ImageIO.write(image, "jpg", new File(filePathAndName));

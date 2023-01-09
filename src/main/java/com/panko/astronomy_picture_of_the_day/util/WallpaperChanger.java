@@ -1,11 +1,11 @@
-package com.panko.astronomy_picture_of_the_day.service;
+package com.panko.astronomy_picture_of_the_day.util;
 
 import com.panko.astronomy_picture_of_the_day.entity.Picture;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.win32.W32APIOptions;
 
-public class WallpaperChangerService {
+public class WallpaperChanger {
     private interface User32 extends Library {
         User32 INSTANCE = Native.load("user32", User32.class, W32APIOptions.DEFAULT_OPTIONS);
 
