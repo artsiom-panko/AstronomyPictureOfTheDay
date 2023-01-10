@@ -7,16 +7,15 @@ import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
 import com.panko.astronomy_picture_of_the_day.util.WallpaperChanger;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 
-import static com.panko.astronomy_picture_of_the_day.controller.KeyInputController.KEY_INPUT_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
 
@@ -52,16 +51,27 @@ public class RootController {
         if (apiKey == null || apiKey.isBlank()) {
             keyInputController.loadKeyInputScene(rootContainer);
         } else {
-            Picture picture = new Picture();
-//            HttpResponse<String> httpResponse = apiService.sendApiService(apiKey);
-//            Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
-//            imageSaver.savePictureToFolder(picture);
-//            WallpaperChanger.setScreenImage(picture);
-            picture.setDescription("Just like various shapes, you can also create a text node in JavaFX. The text node is represented by the class named Text, which belongs to the package javafx.scene.text.\n" +
-                    "This class contains several properties to create text in JavaFX and modify its appearance. This class also inherits the Shape class which belongs to the package javafx.scene.shape.\n" +
-                    "Therefore, in addition to the properties of the text like font, alignment, line spacing, text, etc. It also inherits the basic shape node properties such as strokeFill, stroke, strokeWidth, strokeType, etc.");
+            HttpResponse<String> httpResponse = apiService.sendApiService(apiKey);
+            Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
+            imageSaver.savePictureToFolder(picture);
+            WallpaperChanger.setScreenImage(picture);
 
-            pictureDescriptionController.loadPictureDescriptionScene(rootContainer, picture);
+            loadPictureDescriptionScene(picture);
+        }
+    }
+
+    public void loadPictureDescriptionScene(Picture picture) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource(PICTURE_DESCRIPTION_SCENE_PATH));
+            Pane vboxContainer = loader.load();
+            PictureDescriptionController pictureDescriptionController1 = loader.getController();
+            pictureDescriptionController1.showPictureDescription(picture.getDescription());
+
+            rootContainer.setPadding(new Insets(5));
+            rootContainer.setCenter(vboxContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
