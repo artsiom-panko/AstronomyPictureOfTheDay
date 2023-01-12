@@ -65,9 +65,12 @@ public class RootController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource(KEY_INPUT_SCENE_PATH));
-            Pane vboxContainer = loader.load();
+            Pane container = loader.load();
 
-            rootContainer.setCenter(vboxContainer);
+            KeyInputController keyInputController = loader.getController();
+            keyInputController.setRootController(this);
+
+            rootContainer.setCenter(container);
         } catch (IOException e) {
             e.printStackTrace();
         }
