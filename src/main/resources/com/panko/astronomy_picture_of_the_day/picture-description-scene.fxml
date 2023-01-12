@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="373.0" prefWidth="409.0" style="-fx-background-color: B0A9F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController">
-    <TextArea fx:id="pictureDescription" editable="false" layoutX="6.0" layoutY="7.0" prefHeight="360.0" prefWidth="397.0" wrapText="true">
-      <font>
-         <Font size="13.0" />
-      </font></TextArea>
-</Pane>
+<?import javafx.scene.layout.HBox?>
+<HBox style="-fx-background-color: B0A9F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController">
+    <TextArea fx:id="pictureDescription" editable="false" wrapText="true">
+        <font>
+            <Font size="13.0"/>
+        </font>
+    </TextArea>
+</HBox>
