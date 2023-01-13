@@ -9,7 +9,7 @@ public class PictureDescriptionController {
     private TextArea pictureDescription;
 
     public static final String PICTURE_DESCRIPTION_SCENE_PATH =
-            "/com/panko/astronomy_picture_of_the_day/picture-description-scene.fxml";
+            "/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml";
 
     public void showPictureDescription(String description) {
         pictureDescription.setText(description);

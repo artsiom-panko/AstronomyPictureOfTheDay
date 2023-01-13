@@ -13,7 +13,7 @@ public class KeyInputController {
     private final ApiKeyService apiKeyService = new ApiKeyService();
 
     public static final String KEY_INPUT_SCENE_PATH =
-            "/com/panko/astronomy_picture_of_the_day/key-input-scene.fxml";
+            "/com/panko/astronomy_picture_of_the_day/scene/key-input-scene.fxml";
 
     public void setRootController(RootController rootController) {
         this.rootController = rootController;
