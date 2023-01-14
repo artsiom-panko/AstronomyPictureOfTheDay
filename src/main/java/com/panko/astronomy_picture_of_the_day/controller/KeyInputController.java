@@ -17,7 +17,7 @@ public class KeyInputController {
     @FXML
     private TextField newApiKey;
     @FXML
-    private TextArea selectedFolderDirectory;
+    private TextField selectedFolderDirectory;
     @FXML
     private ToggleGroup language_group;
 

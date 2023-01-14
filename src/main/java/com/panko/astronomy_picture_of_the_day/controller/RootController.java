@@ -73,6 +73,7 @@ public class RootController {
             keyInputController.setRootController(this);
             keyInputController.setRootStage(getRootStage());
 
+            rootContainer.setTop(null);
             rootContainer.setCenter(container);
         } catch (IOException e) {
             e.printStackTrace();
