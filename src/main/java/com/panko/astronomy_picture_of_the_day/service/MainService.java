@@ -1,10 +1,11 @@
 package com.panko.astronomy_picture_of_the_day.service;
 
+import com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager;
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
 
 public class MainService {
     private final ApiService apiService = new ApiService();
-    private final ApiKeyService apiKeyService = new ApiKeyService();
+    private final ApplicationPropertiesManager applicationPropertiesManager = new ApplicationPropertiesManager();
     private final ImageSaver imageSaver = new ImageSaver();
     private final HttpResponseHandlerService responseHandlerService = new HttpResponseHandlerService();
 
