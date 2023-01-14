@@ -17,7 +17,7 @@
     </padding>
    <HBox>
       <children>
-          <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Astronomy picture of the day" textAlignment="LEFT">
+          <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Astronomy picture of the day">
               <font>
                   <Font name="System Bold" size="14.0" />
               </font>
@@ -75,10 +75,10 @@
                     <Insets />
                 </HBox.margin>
             <toggleGroup>
-                    <ToggleGroup fx:id="language_group" />
+                    <ToggleGroup fx:id="languageGroup" />
             </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="RU" textAlignment="CENTER" toggleGroup="$language_group">
+            <RadioButton mnemonicParsing="false" text="RU" textAlignment="CENTER" toggleGroup="languageGroup">
             <HBox.margin>
                <Insets left="30.0" />
             </HBox.margin>
