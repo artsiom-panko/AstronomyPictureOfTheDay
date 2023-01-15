@@ -10,7 +10,7 @@ class ApiServiceTest {
 
     @Test
     void sendApiService() {
-        HttpResponse<String> stringHttpResponse = apiService.sendApiService("key");
+        HttpResponse<String> stringHttpResponse = apiService.sendHttpRequest("key");
 
         System.out.println(stringHttpResponse);
     }

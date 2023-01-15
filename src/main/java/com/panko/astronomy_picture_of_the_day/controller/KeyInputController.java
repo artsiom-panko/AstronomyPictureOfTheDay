@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+import static com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager.*;
+
 public class KeyInputController {
 
     @FXML
@@ -19,7 +21,7 @@ public class KeyInputController {
     @FXML
     private ToggleGroup languageGroup;
 
-    private Stage rootStage;
+    private Stage primaryStage;
     private RootController rootController;
 
     private final ApplicationPropertiesManager applicationPropertiesManager = new ApplicationPropertiesManager();
@@ -31,8 +33,8 @@ public class KeyInputController {
         this.rootController = rootController;
     }
 
-    public void setRootStage(Stage rootStage) {
-        this.rootStage = rootStage;
+    public void setRootStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     /**
@@ -40,9 +42,9 @@ public class KeyInputController {
      */
     @FXML
     private void saveNewApiKey() {
-        boolean wasKeySavedSuccessfully = applicationPropertiesManager.saveKey("nasa.api.key", newApiKey.getText());
-        applicationPropertiesManager.saveKey("pictures.folder", selectedFolderDirectory.getText());
-        applicationPropertiesManager.saveKey("language", ((RadioButton) languageGroup.getSelectedToggle()).getText());
+        boolean wasKeySavedSuccessfully = applicationPropertiesManager.saveKey(NASA_API_KEY, newApiKey.getText());
+        applicationPropertiesManager.saveKey(PICTURES_FOLDER, selectedFolderDirectory.getText());
+        applicationPropertiesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
         if (wasKeySavedSuccessfully) {
             rootController.process();
@@ -55,7 +57,7 @@ public class KeyInputController {
         directoryChooser.setTitle("Select Some Directories");
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-        File dir = directoryChooser.showDialog(rootStage);
+        File dir = directoryChooser.showDialog(primaryStage);
         if (dir != null) {
             selectedFolderDirectory.setText(dir.getAbsolutePath());
         } else {

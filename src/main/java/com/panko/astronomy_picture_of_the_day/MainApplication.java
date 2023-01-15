@@ -15,8 +15,8 @@ public class MainApplication extends Application {
     }
 
     @Override
-    public void start(Stage rootStage) {
-        rootController.initRootScene(rootStage);
+    public void start(Stage primaryStage) {
+        rootController.initRootScene(primaryStage);
         rootController.process();
     }
 }

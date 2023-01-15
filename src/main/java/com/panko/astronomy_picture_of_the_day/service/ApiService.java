@@ -15,7 +15,7 @@ public class ApiService {
     private static final Logger logger = System.getLogger(ApiService.class.getName());
     private static final String NASA_URI = "https://api.nasa.gov/planetary/apod?";
 
-    public HttpResponse<String> sendApiService(String key) {
+    public HttpResponse<String> sendHttpRequest(String key) {
         try {
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(new URI(NASA_URI + "api_key=" + key))

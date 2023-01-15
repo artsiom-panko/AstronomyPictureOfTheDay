@@ -17,7 +17,7 @@ public class MainService {
 //        imageDescription.setText(picture.getDescription());
 //
 //
-//        HttpResponse<String> httpResponse = apiService.sendApiService(key);
+//        HttpResponse<String> httpResponse = apiService.sendHttpRequest(key);
 //        Picture picture = responseHandlerService.handleResponse(httpResponse);
 //        imageWriterService.writePictureToFolder(picture);
 //        WallpaperChangerService.setScreenImage(picture);
@@ -27,7 +27,7 @@ public class MainService {
 
 //    public void test() {
 //        String key = apiKeyService.readKey(NASA_API_KEY);
-//        HttpResponse<String> httpResponse = apiService.sendApiService(key);
+//        HttpResponse<String> httpResponse = apiService.sendHttpRequest(key);
 //        Picture picture = responseHandlerService.handleResponse(httpResponse);
 //        imageWriterService.writePictureToFolder(picture);
 //        WallpaperChangerService.setScreenImage(picture);

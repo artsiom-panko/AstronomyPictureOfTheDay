@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.Properties;
 
 public class ApplicationPropertiesManager {
+    public static final String LANGUAGE = "language";
+    public static final String NASA_API_KEY = "nasa.api.key";
+    public static final String PICTURES_FOLDER = "pictures.folder";
+
     private static final String APPLICATION_PROPERTIES = "src/main/resources/application.properties";
 
     public String readKey(String key) {
