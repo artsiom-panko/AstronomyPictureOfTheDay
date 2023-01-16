@@ -64,51 +64,30 @@ public class RootController {
         return rootContainer;
     }
 
-    private Service<Void> backgroundThread;
-
     public void process() {
         String apiKey = applicationPropertiesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
             loadKeyInputScene(rootContainer);
         } else {
-//            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString(), true);
-//            ImageView imageView = new ImageView(loadingGif);
-//            rootContainer.setCenter(imageView);
 
-            Task<Void> task = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString());
+            ImageView imageView = new ImageView(loadingGif);
+            rootContainer.setCenter(imageView);
+
+            new Thread(() -> {
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+
+                Platform.runLater(() -> {
                     Picture picture = new Picture();
                     picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years.");
                     loadPictureDescriptionScene(picture);
-                    return null;
-                }
-            };
-
-            task.run();
-//
-//            new Thread(() -> {
-//                Platform.runLater(() -> {
-//                    try {
-//                        Thread.sleep(2000);
-//                    } catch (InterruptedException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//
-//                    System.err.println("HERE!");
-//                    rootContainer.setLeft(new Label("LEFT"));
-//
-//                    Picture picture = new Picture();
-//                    picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years.");
-//                    loadPictureDescriptionScene(picture);
-//                });
-//            }).start();
+                });
+            }).start();
 
 
 
