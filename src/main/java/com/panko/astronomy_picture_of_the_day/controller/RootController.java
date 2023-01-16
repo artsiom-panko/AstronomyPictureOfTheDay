@@ -76,59 +76,21 @@ public class RootController {
             rootContainer.setCenter(imageView);
 
             new Thread(() -> {
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
-				}
+                HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
+                Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
+//                if ("RU".equals(applicationPropertiesManager.readKey(ApplicationPropertiesManager.LANGUAGE))) {
+////                    apiService.sendHttpRequest()
+//                }
+
+//                picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years. This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years.");
+//                picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. ");
+//                imageSaver.savePictureToFolder(picture);
+//                WallpaperChanger.setScreenImage(picture);
 
                 Platform.runLater(() -> {
-                    Picture picture = new Picture();
-                    picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years.");
                     loadPictureDescriptionScene(picture);
                 });
             }).start();
-
-
-
-//            ProgressBar progressBar = new ProgressBar(0);
-//            VBox vBox = new VBox(progressBar);
-//            Scene scene = new Scene(vBox, 960, 600);
-//
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
-//
-//            Thread taskThread = new Thread(() -> {
-//                double progress = 0;
-//                for (int i = 0; i < 10; i++) {
-//
-//                    try {
-//                        Thread.sleep(1000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    progress += 0.1;
-//                    final double reportedProgress = progress;
-//
-//                    Platform.runLater(() -> progressBar.setProgress(reportedProgress));
-//                }
-//            });
-//
-//            taskThread.start();
-
-
-
-//
-////            HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-////            Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
-////            if ("RU".equals(applicationPropertiesManager.readKey(ApplicationPropertiesManager.LANGUAGE))) {
-////                apiService.sendHttpRequest()
-////            }
-//
-//
-////            imageSaver.savePictureToFolder(picture);
-////            WallpaperChanger.setScreenImage(picture);
         }
     }
 
@@ -156,7 +118,7 @@ public class RootController {
             Pane vboxContainer = loader.load();
 
             PictureDescriptionController pictureDescriptionController = loader.getController();
-            pictureDescriptionController.showPictureDescription(picture.getDescription());
+            pictureDescriptionController.showPictureDescription(picture);
 
             rootContainer.setCenter(vboxContainer);
         } catch (IOException e) {
@@ -177,32 +139,11 @@ public class RootController {
             loader.setLocation(MainApplication.class.getResource("scene/root-scene.fxml"));
             rootContainer = loader.load();
 
-//            Label left = createLabel("left");
-//            left.setPrefHeight(100);
-//            left.setStyle("-fx-background-color: #BBBBBB;");
-//            rootContainer.setLeft(left);
-//
-//            Label right = createLabel("right");
-//            right.setPrefHeight(100);
-//            right.setStyle("-fx-background-color: #CCCCCC;");
-//            rootContainer.setRight(right);
-
-//            Label bottom = createLabel("bottom");
-//            bottom.setPrefHeight(100);
-//            bottom.setStyle("-fx-background-color: #AAAFFF;");
-//            rootContainer.setBottom(bottom);
-
             Scene scene = new Scene(rootContainer);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static Label createLabel(String text) {
-        Label label = new Label(text);
-        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        return label;
     }
 }

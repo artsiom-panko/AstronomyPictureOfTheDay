@@ -1,11 +1,16 @@
 package com.panko.astronomy_picture_of_the_day.entity;
 
+import java.time.LocalDate;
+
 public class Picture {
-    String type;
-    String title;
-    String imgUrl;
-    String localPath;
-    String description;
+
+    private String type;
+    private String title;
+    private String imgUrl;
+    private LocalDate date;
+    private String copyright;
+    private String localPath;
+    private String description;
 
     public String getType() {
         return type;
@@ -45,5 +50,21 @@ public class Picture {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
