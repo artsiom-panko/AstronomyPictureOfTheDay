@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox alignment="CENTER_RIGHT" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.panko.astronomy_picture_of_the_day.controller.BottomPaneController">
+
+    <children>
+        <Button mnemonicParsing="false" onAction="#showAboutPage" opacity="0.5" style="-fx-background-color: transparent;" text="About" />
+        <Button mnemonicParsing="false" onAction="#showSettingsPage" opacity="0.5" style="-fx-background-color: transparent;" text="Settings" />
+        <!--        <Button onAction="#showPersonalPage" mnemonicParsing="false" opacity="0.5"-->
+        <!--                style="-fx-background-color: transparent;" text="Artsiom Panko">-->
+        <!--            <HBox.margin>-->
+        <!--                <Insets left="10.0"/>-->
+        <!--            </HBox.margin>-->
+        <!--        </Button>-->
+    </children>
+
+</HBox>

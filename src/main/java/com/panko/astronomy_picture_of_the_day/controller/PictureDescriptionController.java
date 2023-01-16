@@ -5,8 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
-import java.util.Date;
-
 public class PictureDescriptionController {
 
     @FXML

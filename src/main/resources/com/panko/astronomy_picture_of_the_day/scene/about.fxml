@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <ImageView fitHeight="104.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+         <image>
+            <Image url="@../img/logo.png" />
+         </image>
+      </ImageView>
+   </left>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <center>
+      <VBox prefHeight="243.0" prefWidth="499.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Astronomy picture of the day">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="0.0" prefWidth="465.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="On GitHub:">
+                     <HBox.margin>
+                        <Insets right="9.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Hyperlink prefHeight="26.0" prefWidth="414.0" text="https://github.com/artsiom-panko/AstronomyPictureOfTheDay">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="465.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NASA API:">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Hyperlink text="https://api.nasa.gov/">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="465.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ArchiveHub:">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Hyperlink text="https://apod.nasa.gov/apod/archivepix.html">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="465.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="artsiom.panko@gmail.com">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="465.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright © 2023 Artsiom Panko">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

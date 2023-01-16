@@ -85,7 +85,6 @@ public class RootController {
 
 //            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString());
 //            ImageView imageView = new ImageView(loadingGif);
-            Node bottomNode = rootContainer.getBottom();
 //            rootContainer.setCenter(imageView);
             rootContainer.setBottom(null);
 
@@ -103,7 +102,7 @@ public class RootController {
 
                 Platform.runLater(() -> {
                     loadPictureDescriptionScene(picture);
-                    rootContainer.setBottom(bottomNode);
+                    loadBottomPaneScene();
                 });
             }).start();
         }
@@ -135,6 +134,18 @@ public class RootController {
             pictureDescriptionController.showPictureDescription(picture);
 
             rootContainer.setCenter(vboxContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadBottomPaneScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/bottom-pane.fxml"));
+            Pane bottomPane = loader.load();
+
+            rootContainer.setBottom(bottomPane);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
 
+<BorderPane prefHeight="380.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.panko.astronomy_picture_of_the_day.controller.RootController">
 
-<BorderPane prefHeight="380.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.panko.astronomy_picture_of_the_day.controller.RootController">
-   <bottom>
-      <HBox alignment="CENTER_RIGHT" prefHeight="23.0" prefWidth="470.0" BorderPane.alignment="CENTER">
-         <children>
-            <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="About">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Text>
-            <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Text>
-            <Text opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0" text="Artsiom Panko">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Text>
-         </children>
-      </HBox>
-   </bottom>
 </BorderPane>
