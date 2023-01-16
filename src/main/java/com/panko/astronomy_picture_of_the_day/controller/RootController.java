@@ -13,6 +13,8 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -70,10 +72,22 @@ public class RootController {
         if (apiKey == null || apiKey.isBlank()) {
             loadKeyInputScene(rootContainer);
         } else {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/loading-scene.fxml"));
+            Pane loadingScene = null;
+            try {
+                loadingScene = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString());
-            ImageView imageView = new ImageView(loadingGif);
-            rootContainer.setCenter(imageView);
+            rootContainer.setCenter(loadingScene);
+
+//            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString());
+//            ImageView imageView = new ImageView(loadingGif);
+            Node bottomNode = rootContainer.getBottom();
+//            rootContainer.setCenter(imageView);
+            rootContainer.setBottom(null);
 
             new Thread(() -> {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
@@ -89,6 +103,7 @@ public class RootController {
 
                 Platform.runLater(() -> {
                     loadPictureDescriptionScene(picture);
+                    rootContainer.setBottom(bottomNode);
                 });
             }).start();
         }
@@ -104,7 +119,6 @@ public class RootController {
             keyInputController.setRootController(this);
             keyInputController.setRootStage(getRootStage());
 
-            rootContainer.setTop(null);
             rootContainer.setCenter(container);
         } catch (IOException e) {
             e.printStackTrace();
