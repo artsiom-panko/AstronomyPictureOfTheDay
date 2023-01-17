@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
-
 public class BottomPaneController {
 
     @FXML
@@ -43,6 +41,13 @@ public class BottomPaneController {
 
     @FXML
     private void showSettingsPage() {
-
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml"));
+        Pane descriptionScene = null;
+        try {
+            descriptionScene = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
