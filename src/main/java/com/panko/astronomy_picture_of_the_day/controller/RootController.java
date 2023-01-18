@@ -70,7 +70,7 @@ public class RootController {
         String apiKey = applicationPropertiesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
-            loadKeyInputScene(rootContainer);
+            loadKeyInputScene();
         } else {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/loading-scene.fxml"));
@@ -108,7 +108,7 @@ public class RootController {
         }
     }
 
-    public void loadKeyInputScene(Pane pane) {
+    public void loadKeyInputScene() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource(KEY_INPUT_SCENE_PATH));
@@ -132,6 +132,7 @@ public class RootController {
 
             PictureDescriptionController pictureDescriptionController = loader.getController();
             pictureDescriptionController.showPictureDescription(picture);
+            pictureDescriptionController.setPrimaryContainer(rootContainer);
 
             rootContainer.setCenter(vboxContainer);
         } catch (IOException e) {

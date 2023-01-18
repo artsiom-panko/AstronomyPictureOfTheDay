@@ -31,22 +31,18 @@ public class SceneLoaderService {
     }
 
     public <T> T getSceneController(Scene sceneName) {
-        loadScene(sceneName);
-        return this.controller;
+        Pane pane = loadScene(sceneName);
+        return null;
     }
 
-    public void loadScene(Scene sceneName) {
+    public Pane loadScene(Scene sceneName) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource(sceneName.path));
-            Pane vboxContainer = loader.load();
-
-            PictureDescriptionController pictureDescriptionController = loader.getController();
-            pictureDescriptionController.showPictureDescription(picture);
-
-            rootContainer.setCenter(vboxContainer);
+            return loader.load();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -56,9 +52,5 @@ public class SceneLoaderService {
 
     public static void removeScreen(String name) {
         screenMap.remove(name);
-    }
-
-    protected void activate(String name) {
-        main.setRoot(screenMap.get(name));
     }
 }

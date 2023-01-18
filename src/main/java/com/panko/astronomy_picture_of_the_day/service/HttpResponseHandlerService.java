@@ -17,8 +17,13 @@ public class HttpResponseHandlerService {
         picture.setTitle(responseBody.getString("title"));
         picture.setImgUrl(responseBody.getString("hdurl"));
         picture.setType(responseBody.getString("media_type"));
-        picture.setCopyright(responseBody.getString("copyright"));
         picture.setDescription(responseBody.getString("explanation"));
+
+        if (responseBody.has("copyright")) {
+            picture.setCopyright(responseBody.getString("copyright"));
+        } else {
+            picture.setCopyright("NASA");
+        }
 
         if (!"image".equals(picture.getType())) {
             throw new RuntimeException("Unsupported image type: " + picture.getType());
