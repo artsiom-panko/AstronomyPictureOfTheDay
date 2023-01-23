@@ -8,12 +8,12 @@ public class ApplicationPropertiesManager {
     public static final String NASA_API_KEY = "nasa.api.key";
     public static final String PICTURES_FOLDER = "pictures.folder";
 
-    private static final String APPLICATION_PROPERTIES = "src/main/resources/application.properties";
+    private static final String APPLICATION_PROPERTIES = "/application.properties";
 
     public String readKey(String key) {
-        try (FileInputStream fileInputStream = new FileInputStream(APPLICATION_PROPERTIES)) {
+        try (InputStream inputStream = getClass().getResourceAsStream(APPLICATION_PROPERTIES)) {
             Properties properties = new Properties();
-            properties.load(fileInputStream);
+            properties.load(inputStream);
 
             return properties.getProperty(key);
         } catch (IOException e) {
@@ -23,8 +23,8 @@ public class ApplicationPropertiesManager {
 
     public boolean saveKey(String key, String value) {
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream(APPLICATION_PROPERTIES)) {
-            properties.load(fileInputStream);
+        try (InputStream inputStream = getClass().getResourceAsStream(APPLICATION_PROPERTIES)) {
+            properties.load(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

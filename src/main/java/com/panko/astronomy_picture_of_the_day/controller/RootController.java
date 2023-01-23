@@ -6,37 +6,19 @@ import com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager;
 import com.panko.astronomy_picture_of_the_day.service.ApiService;
 import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService;
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
-import com.panko.astronomy_picture_of_the_day.util.WallpaperChanger;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import javax.swing.*;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.Thread;
 import java.net.http.HttpResponse;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import static com.panko.astronomy_picture_of_the_day.controller.KeyInputController.KEY_INPUT_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
@@ -73,7 +55,7 @@ public class RootController {
             loadKeyInputScene();
         } else {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/loading-scene.fxml"));
+            loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
             Pane loadingScene = null;
             try {
                 loadingScene = loader.load();
@@ -143,7 +125,7 @@ public class RootController {
     public void loadBottomPaneScene() {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/bottom-pane.fxml"));
+            loader.setLocation(MainApplication.class.getResource("/scene/bottom-pane.fxml"));
             Pane bottomPane = loader.load();
 
             rootContainer.setBottom(bottomPane);
@@ -158,11 +140,10 @@ public class RootController {
 
         this.primaryStage.setMaxWidth(500);
         this.primaryStage.setMaxHeight(600);
-        this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/panko/astronomy_picture_of_the_day/img/logo.png"))));
-
+        this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/img/logo.png")).toString(), true));
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("scene/root-scene.fxml"));
+            loader.setLocation(MainApplication.class.getResource("/scene/root-scene.fxml"));
             rootContainer = loader.load();
 
             Scene scene = new Scene(rootContainer);

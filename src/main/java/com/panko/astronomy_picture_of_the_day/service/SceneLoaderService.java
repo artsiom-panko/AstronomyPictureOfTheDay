@@ -1,9 +1,7 @@
 package com.panko.astronomy_picture_of_the_day.service;
 
 import com.panko.astronomy_picture_of_the_day.MainApplication;
-import com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -12,7 +10,7 @@ import java.util.HashMap;
 public class SceneLoaderService {
 
     public enum Scene {
-        DESCRIPTION("/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml");
+        DESCRIPTION("/scene/picture-description-scene.fxml");
 
         public final String path;
 
@@ -21,7 +19,7 @@ public class SceneLoaderService {
         }
     }
 
-    public final String DESCRIPTION = "/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml";
+    public final String DESCRIPTION = "/scene/picture-description-scene.fxml";
 
     private final Scene main;
     private static final HashMap<String, Pane> screenMap = new HashMap<>();

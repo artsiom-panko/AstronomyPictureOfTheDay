@@ -27,7 +27,7 @@ public class KeyInputController {
     private final ApplicationPropertiesManager applicationPropertiesManager = new ApplicationPropertiesManager();
 
     public static final String KEY_INPUT_SCENE_PATH =
-            "/com/panko/astronomy_picture_of_the_day/scene/key-input-scene.fxml";
+            "/scene/key-input-scene.fxml";
 
     public void setRootController(RootController rootController) {
         this.rootController = rootController;

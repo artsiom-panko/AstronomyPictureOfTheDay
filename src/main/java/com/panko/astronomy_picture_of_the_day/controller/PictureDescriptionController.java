@@ -29,7 +29,7 @@ public class PictureDescriptionController {
     }
 
     public static final String PICTURE_DESCRIPTION_SCENE_PATH =
-            "/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml";
+            "/scene/picture-description-scene.fxml";
 
     public void showPictureDescription(Picture picture) {
         pictureTitle.setText(picture.getTitle());
@@ -45,7 +45,7 @@ public class PictureDescriptionController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About Astronomy picture of the day");
 
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/panko/astronomy_picture_of_the_day/img/logo.png")));
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(logo);
 
@@ -53,7 +53,7 @@ public class PictureDescriptionController {
         alert.setGraphic(null);
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/about.fxml"));
+        loader.setLocation(MainApplication.class.getResource("/scene/about.fxml"));
         Pane aboutScene = null;
         try {
             aboutScene = loader.load();
@@ -69,7 +69,7 @@ public class PictureDescriptionController {
     @FXML
     private void showSettingsPage() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/com/panko/astronomy_picture_of_the_day/scene/picture-description-scene.fxml"));
+        loader.setLocation(MainApplication.class.getResource("/scene/picture-description-scene.fxml"));
         Pane descriptionScene = null;
         try {
             descriptionScene = loader.load();
