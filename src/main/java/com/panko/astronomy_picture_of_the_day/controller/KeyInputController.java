@@ -1,6 +1,6 @@
 package com.panko.astronomy_picture_of_the_day.controller;
 
-import com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager;
+import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-import static com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager.*;
+import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.*;
 
 public class KeyInputController {
 
@@ -24,7 +24,7 @@ public class KeyInputController {
     private Stage primaryStage;
     private RootController rootController;
 
-    private final ApplicationPropertiesManager applicationPropertiesManager = new ApplicationPropertiesManager();
+    private final PreferencesManager preferencesManager = new PreferencesManager();
 
     public static final String KEY_INPUT_SCENE_PATH =
             "/scene/key-input-scene.fxml";
@@ -42,13 +42,11 @@ public class KeyInputController {
      */
     @FXML
     private void saveNewApiKey() {
-        boolean wasKeySavedSuccessfully = applicationPropertiesManager.saveKey(NASA_API_KEY, newApiKey.getText());
-        applicationPropertiesManager.saveKey(PICTURES_FOLDER, selectedFolderDirectory.getText());
-        applicationPropertiesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
+        preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());
+        preferencesManager.saveKey(PICTURES_FOLDER, selectedFolderDirectory.getText());
+        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
-        if (wasKeySavedSuccessfully) {
-            rootController.process();
-        }
+        rootController.process();
     }
 
     @FXML

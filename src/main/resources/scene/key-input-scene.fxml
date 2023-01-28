@@ -78,7 +78,7 @@
                     <ToggleGroup fx:id="languageGroup" />
             </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="RU" textAlignment="CENTER" toggleGroup="languageGroup">
+            <RadioButton mnemonicParsing="false" text="RU" textAlignment="CENTER" toggleGroup="$languageGroup">
             <HBox.margin>
                <Insets left="30.0" />
             </HBox.margin>

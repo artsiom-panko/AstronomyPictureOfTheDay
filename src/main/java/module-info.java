@@ -6,6 +6,7 @@ module com.example.astronomy_picture_of_the_day {
     requires java.desktop;
     requires java.net.http;
     requires com.sun.jna;
+    requires java.prefs;
 
     exports com.panko.astronomy_picture_of_the_day;
     exports com.panko.astronomy_picture_of_the_day.entity;

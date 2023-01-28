@@ -2,7 +2,7 @@ package com.panko.astronomy_picture_of_the_day.controller;
 
 import com.panko.astronomy_picture_of_the_day.MainApplication;
 import com.panko.astronomy_picture_of_the_day.entity.Picture;
-import com.panko.astronomy_picture_of_the_day.util.ApplicationPropertiesManager;
+import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
 import com.panko.astronomy_picture_of_the_day.service.ApiService;
 import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService;
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
@@ -14,13 +14,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.Thread;
 import java.net.http.HttpResponse;
 import java.util.Objects;
 
-import static com.panko.astronomy_picture_of_the_day.controller.KeyInputController.KEY_INPUT_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
 
@@ -37,8 +35,10 @@ public class RootController {
     private final ImageSaver imageSaver = new ImageSaver();
 
     private final ApiService apiService = new ApiService();
-    private final ApplicationPropertiesManager applicationPropertiesManager = new ApplicationPropertiesManager();
+    private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseHandlerService httpResponseHandlerService = new HttpResponseHandlerService();
+
+    private static final System.Logger logger = System.getLogger(RootController.class.getName());
 
     public Stage getRootStage() {
         return primaryStage;
@@ -49,11 +49,12 @@ public class RootController {
     }
 
     public void process() {
-        String apiKey = applicationPropertiesManager.readKey(NASA_API_KEY);
+        String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
             loadKeyInputScene();
         } else {
+            logger.log(System.Logger.Level.INFO, "Load loading scene");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
             Pane loadingScene = null;
@@ -92,8 +93,9 @@ public class RootController {
 
     public void loadKeyInputScene() {
         try {
+            logger.log(System.Logger.Level.INFO, "Load key input scene");
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource(KEY_INPUT_SCENE_PATH));
+            loader.setLocation(getClass().getResource("/scene/key-input-scene.fxml"));
             Pane container = loader.load();
 
             KeyInputController keyInputController = loader.getController();
@@ -108,6 +110,7 @@ public class RootController {
 
     public void loadPictureDescriptionScene(Picture picture) {
         try {
+            logger.log(System.Logger.Level.INFO, "Load picture description scene");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource(PICTURE_DESCRIPTION_SCENE_PATH));
             Pane vboxContainer = loader.load();
