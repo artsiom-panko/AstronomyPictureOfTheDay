@@ -36,36 +36,6 @@ public class PictureDescriptionController {
         pictureDescription.setText(picture.getDescription().concat("\n").concat(generateCopyrightText(picture)));
     }
 
-    private String generateCopyrightText(Picture picture) {
-        return String.format("Copyright © %d by %s", picture.getDate().getYear(), picture.getCopyright());
-    }
-
-    @FXML
-    private void showAboutPage() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About Astronomy picture of the day");
-
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(logo);
-
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/scene/about.fxml"));
-        Pane aboutScene = null;
-        try {
-            aboutScene = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        alert.getDialogPane().setContent(aboutScene);
-
-        alert.showAndWait();
-    }
-
     @FXML
     private void showSettingsPage() {
         FXMLLoader loader = new FXMLLoader();
@@ -77,5 +47,9 @@ public class PictureDescriptionController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String generateCopyrightText(Picture picture) {
+        return String.format("Copyright © %d by %s", picture.getDate().getYear(), picture.getCopyright());
     }
 }
