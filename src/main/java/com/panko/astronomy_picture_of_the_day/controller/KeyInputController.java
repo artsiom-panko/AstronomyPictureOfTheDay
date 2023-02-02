@@ -26,9 +26,6 @@ public class KeyInputController {
 
     private final PreferencesManager preferencesManager = new PreferencesManager();
 
-    public static final String KEY_INPUT_SCENE_PATH =
-            "/scene/key-input-scene.fxml";
-
     public void setRootController(RootController rootController) {
         this.rootController = rootController;
     }
@@ -37,9 +34,6 @@ public class KeyInputController {
         this.primaryStage = primaryStage;
     }
 
-    /**
-     * Called when the user clicks ok.
-     */
     @FXML
     private void saveNewApiKey() {
         preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());

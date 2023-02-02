@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,20 +22,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.lang.Thread;
+import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
 
-/**
- * The controller for the root layout. The root layout provides the basic
- * application layout containing a menu bar and space where other JavaFX
- * elements can be placed.
- */
-public class RootController {
+public class RootController implements Initializable {
 
     private Stage primaryStage;
+
+    @FXML
     private BorderPane rootContainer;
 
     private final ImageSaver imageSaver = new ImageSaver();
@@ -45,12 +45,13 @@ public class RootController {
 
     private static final System.Logger logger = System.getLogger(RootController.class.getName());
 
-    public Stage getRootStage() {
-        return primaryStage;
+    public void setStage(Stage stage) {
+        this.primaryStage = stage;
     }
 
-    public Pane getRootContainer() {
-        return rootContainer;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        process();
     }
 
     public void process() {
@@ -105,7 +106,7 @@ public class RootController {
 
             KeyInputController keyInputController = loader.getController();
             keyInputController.setRootController(this);
-            keyInputController.setRootStage(getRootStage());
+            keyInputController.setRootStage(primaryStage);
 
             rootContainer.setCenter(container);
         } catch (IOException e) {
@@ -172,25 +173,5 @@ public class RootController {
         alert.getDialogPane().setContent(aboutScene);
 
         alert.showAndWait();
-    }
-
-    public void initRootScene(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Astronomy picture of the day");
-
-        this.primaryStage.setMaxWidth(500);
-        this.primaryStage.setMaxHeight(600);
-        this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/img/logo.png")).toString(), true));
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/scene/root-scene.fxml"));
-            rootContainer = loader.load();
-
-            Scene scene = new Scene(rootContainer);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
