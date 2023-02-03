@@ -2,18 +2,16 @@ package com.panko.astronomy_picture_of_the_day.controller;
 
 import com.panko.astronomy_picture_of_the_day.MainApplication;
 import com.panko.astronomy_picture_of_the_day.entity.Picture;
-import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
 import com.panko.astronomy_picture_of_the_day.service.ApiService;
 import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService;
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
+import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -21,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.Thread;
 import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.Objects;
@@ -63,7 +60,7 @@ public class RootController implements Initializable {
             logger.log(System.Logger.Level.INFO, "Load loading scene");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
-            Pane loadingScene = null;
+            Pane loadingScene;
             try {
                 loadingScene = loader.load();
             } catch (IOException e) {
@@ -71,11 +68,6 @@ public class RootController implements Initializable {
             }
 
             rootContainer.setCenter(loadingScene);
-
-//            Image loadingGif = new Image(new File("src/main/resources/com/panko/astronomy_picture_of_the_day/img/rocketBottomToTop.gif").toURI().toString());
-//            ImageView imageView = new ImageView(loadingGif);
-//            rootContainer.setCenter(imageView);
-            rootContainer.setBottom(null);
 
             new Thread(() -> {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
@@ -91,7 +83,7 @@ public class RootController implements Initializable {
 
                 Platform.runLater(() -> {
                     loadPictureDescriptionScene(picture);
-                    loadBottomPaneScene();
+//                    loadBottomPaneScene();
                 });
             }).start();
         }
@@ -101,7 +93,6 @@ public class RootController implements Initializable {
         try {
             logger.log(System.Logger.Level.INFO, "Load key input scene");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/scene/key-input-scene.fxml"));
-//            loader.setLocation(getClass().getResource("/scene/key-input-scene.fxml"));
             Pane container = loader.load();
 
             KeyInputController keyInputController = loader.getController();

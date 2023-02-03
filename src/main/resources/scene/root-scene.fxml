@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane fx:id="rootContainer" prefHeight="380.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.panko.astronomy_picture_of_the_day.controller.RootController">
+<?import javafx.scene.layout.HBox?>
 
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.Cursor?>
+<BorderPane fx:id="rootContainer" prefHeight="380.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.panko.astronomy_picture_of_the_day.controller.RootController">
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
+                    style="-fx-background-color: transparent;" text="Settings">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#showAboutPage" opacity="0.5"
+                    style="-fx-background-color: transparent;" text="About">
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+        </HBox>
+    </bottom>
 </BorderPane>
