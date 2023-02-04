@@ -11,12 +11,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,20 +72,18 @@ public class RootController implements Initializable {
 
             new Thread(() -> {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-                Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
-//                if ("RU".equals(applicationPropertiesManager.readKey(ApplicationPropertiesManager.LANGUAGE))) {
-////                    apiService.sendHttpRequest()
-//                }
+                if (httpResponse.statusCode() == 200) {
+                    Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
+                    //                    imageSaver.savePictureToFolder(picture);
+//                    WallpaperChanger.setScreenImage(picture);
 
-//                picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years. This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years.");
-//                picture.setDescription("This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. ");
-//                imageSaver.savePictureToFolder(picture);
-//                WallpaperChanger.setScreenImage(picture);
-
-                Platform.runLater(() -> {
-                    loadPictureDescriptionScene(picture);
-//                    loadBottomPaneScene();
-                });
+                    Platform.runLater(() -> loadPictureDescriptionScene(picture));
+                } else {
+                    Platform.runLater(() -> {
+                        showHttpRequestAlert(httpResponse);
+                        loadKeyInputScene();
+                    });
+                }
             }).start();
         }
     }
@@ -107,7 +106,6 @@ public class RootController implements Initializable {
 
     @FXML
     public void loadKeyInputSceneFXML(Event event) {
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         loadKeyInputScene();
     }
 
@@ -128,20 +126,8 @@ public class RootController implements Initializable {
         }
     }
 
-    public void loadBottomPaneScene() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/scene/bottom-pane.fxml"));
-            Pane bottomPane = loader.load();
-
-            rootContainer.setBottom(bottomPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
-    private void showAboutPage() {
+    private void showAboutAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About Astronomy picture of the day");
 
@@ -162,6 +148,25 @@ public class RootController implements Initializable {
         }
 
         alert.getDialogPane().setContent(aboutScene);
+
+        alert.showAndWait();
+    }
+
+    private void showHttpRequestAlert(HttpResponse<String> httpResponse) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setTitle("Error");
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(logo);
+
+        alert.setHeaderText("Error during image loading");
+        alert.setGraphic(null);
+
+        alert.getDialogPane().setContentText(new JSONObject(httpResponse.body())
+                .getJSONObject("error")
+                .get("message").toString());
 
         alert.showAndWait();
     }

@@ -17,7 +17,7 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </Button>
-            <Button mnemonicParsing="false" onAction="#showAboutPage" opacity="0.5"
+            <Button mnemonicParsing="false" onAction="#showAboutAlert" opacity="0.5"
                     style="-fx-background-color: transparent;" text="About">
                 <cursor>
                     <Cursor fx:constant="HAND"/>

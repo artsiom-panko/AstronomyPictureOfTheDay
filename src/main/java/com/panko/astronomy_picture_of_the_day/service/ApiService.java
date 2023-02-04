@@ -23,13 +23,13 @@ public class ApiService {
                     .GET()
                     .build();
 
-            logger.log(Logger.Level.DEBUG, "Request: {0}",
+            logger.log(Logger.Level.INFO, "Request: {0}",
                     httpRequest.toString());
 
             HttpResponse<String> httpResponse = HttpClient.newHttpClient()
                     .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            logger.log(Logger.Level.DEBUG, "Response: {0}",
+            logger.log(Logger.Level.INFO, "Response: {0}",
                     httpResponse.toString());
 
             return httpResponse;
