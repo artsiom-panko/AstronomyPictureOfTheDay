@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.*;
 
-public class KeyInputController implements Initializable {
+public class SettingsController implements Initializable {
 
     @FXML
     private TextField newApiKey;

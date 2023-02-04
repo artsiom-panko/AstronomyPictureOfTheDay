@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.PICTURES_FOLDER;
+
 public class ImageSaver {
+    private final PreferencesManager preferencesManager = new PreferencesManager();
+
     private static final System.Logger logger = System.getLogger(ImageSaver.class.getName());
 
     public boolean savePictureToFolder(Picture picture) {
@@ -17,15 +21,15 @@ public class ImageSaver {
 
             String[] splitUrl = picture.getImgUrl().split("/");
             String fileNameAndFormat = splitUrl[splitUrl.length - 1];
-            String filePathAndName = "C:/Users/artsi/Pictures/space/" + fileNameAndFormat;
+            String filePathAndName = preferencesManager.readKey(PICTURES_FOLDER).concat(fileNameAndFormat);
             picture.setLocalPath(filePathAndName);
 
             ImageIO.write(image, "jpg", new File(filePathAndName));
 
-            logger.log(System.Logger.Level.DEBUG, "Image was successfully saved to: {0}", filePathAndName);
+            logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", filePathAndName);
         } catch (IOException e) {
             logger.log(System.Logger.Level.ERROR, "Error during Image saving: {0}", e.getMessage());
-            throw new RuntimeException(e);
+            return false;
         }
 
         return true;

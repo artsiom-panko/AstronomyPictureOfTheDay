@@ -5,7 +5,7 @@ import java.util.prefs.Preferences;
 public class PreferencesManager {
     public static final String LANGUAGE = "language";
     public static final String NASA_API_KEY = "nasa.api.key";
-    public static final String PICTURES_FOLDER = "pictures.folder";
+    public static final String PICTURES_FOLDER = "folder";
 
     private static final System.Logger logger = System.getLogger(PreferencesManager.class.getName());
 

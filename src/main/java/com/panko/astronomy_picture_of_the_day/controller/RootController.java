@@ -6,6 +6,7 @@ import com.panko.astronomy_picture_of_the_day.service.ApiService;
 import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService;
 import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
 import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
+import com.panko.astronomy_picture_of_the_day.util.WallpaperChanger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
 
-public class RootController implements Initializable {
+public class RootController {
 
     private Stage primaryStage;
 
@@ -47,16 +48,11 @@ public class RootController implements Initializable {
         this.primaryStage = stage;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        process();
-    }
-
     public void process() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
-            loadKeyInputScene();
+            loadKeySettingsScene();
         } else {
             logger.log(System.Logger.Level.INFO, "Load loading scene");
             FXMLLoader loader = new FXMLLoader();
@@ -74,29 +70,32 @@ public class RootController implements Initializable {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
                 if (httpResponse.statusCode() == 200) {
                     Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
-                    //                    imageSaver.savePictureToFolder(picture);
-//                    WallpaperChanger.setScreenImage(picture);
+                    if (!imageSaver.savePictureToFolder(picture)) {
+                        showPictureSaveAlert();
+                        loadKeySettingsScene();
+                    }
+                    WallpaperChanger.setScreenImage(picture);
 
                     Platform.runLater(() -> loadPictureDescriptionScene(picture));
                 } else {
                     Platform.runLater(() -> {
                         showHttpRequestAlert(httpResponse);
-                        loadKeyInputScene();
+                        loadKeySettingsScene();
                     });
                 }
             }).start();
         }
     }
 
-    public void loadKeyInputScene() {
+    public void loadKeySettingsScene() {
         try {
             logger.log(System.Logger.Level.INFO, "Load key input scene");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/scene/key-input-scene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/scene/settings-scene.fxml"));
             Pane container = loader.load();
 
-            KeyInputController keyInputController = loader.getController();
-            keyInputController.setRootController(this);
-            keyInputController.setRootStage(primaryStage);
+            SettingsController settingsController = loader.getController();
+            settingsController.setRootController(this);
+            settingsController.setRootStage(primaryStage);
 
             rootContainer.setCenter(container);
         } catch (IOException e) {
@@ -106,7 +105,7 @@ public class RootController implements Initializable {
 
     @FXML
     public void loadKeyInputSceneFXML(Event event) {
-        loadKeyInputScene();
+        loadKeySettingsScene();
     }
 
     public void loadPictureDescriptionScene(Picture picture) {
@@ -148,6 +147,23 @@ public class RootController implements Initializable {
         }
 
         alert.getDialogPane().setContent(aboutScene);
+
+        alert.showAndWait();
+    }
+
+    private void showPictureSaveAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setTitle("Error");
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(logo);
+
+        alert.setHeaderText("Error during image loading");
+        alert.setGraphic(null);
+
+        alert.getDialogPane().setContentText("Error during saving image to selected folder. Please, select another folder and try again.");
 
         alert.showAndWait();
     }
