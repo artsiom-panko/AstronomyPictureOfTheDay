@@ -7,8 +7,10 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 
 public class HttpResponseHandlerService {
+    private static final System.Logger logger = System.getLogger(HttpResponseHandlerService.class.getName());
 
     public Picture handleResponse(HttpResponse<String> response) {
+
         Picture picture = new Picture();
 
         JSONObject responseBody = new JSONObject(response.body());
@@ -28,6 +30,8 @@ public class HttpResponseHandlerService {
         if (!"image".equals(picture.getType())) {
             throw new RuntimeException("Unsupported image type: " + picture.getType());
         }
+
+        logger.log(System.Logger.Level.INFO, "Parsing result: {1}", picture);
 
         return picture;
     }

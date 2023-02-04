@@ -29,8 +29,8 @@ public class ApiService {
             HttpResponse<String> httpResponse = HttpClient.newHttpClient()
                     .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            logger.log(Logger.Level.INFO, "Response: {0}",
-                    httpResponse.toString());
+            logger.log(Logger.Level.INFO, "Response Headers: {0} \n Body: {1}",
+                    httpResponse.headers(), httpResponse.body());
 
             return httpResponse;
         } catch (URISyntaxException | IOException | InterruptedException e) {

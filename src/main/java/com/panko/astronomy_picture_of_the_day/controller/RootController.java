@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -21,10 +20,8 @@ import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
@@ -68,18 +65,28 @@ public class RootController {
 
             new Thread(() -> {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-                if (httpResponse.statusCode() == 200) {
+                if (httpResponse != null && httpResponse.statusCode() == 200) {
                     Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
                     if (!imageSaver.savePictureToFolder(picture)) {
-                        showPictureSaveAlert();
-                        loadKeySettingsScene();
+                        Platform.runLater(() -> {
+                            showPictureSaveAlert();
+                            loadKeySettingsScene();
+                        });
+                    } else {
+                        WallpaperChanger.setScreenImage(picture);
+                        Platform.runLater(() -> loadPictureDescriptionScene(picture));
                     }
-                    WallpaperChanger.setScreenImage(picture);
-
-                    Platform.runLater(() -> loadPictureDescriptionScene(picture));
                 } else {
                     Platform.runLater(() -> {
-                        showHttpRequestAlert(httpResponse);
+                        String errorMessage;
+                        if (httpResponse == null) {
+                            errorMessage = "Connection problem. \nPlease, try later.";
+                        } else {
+                            errorMessage = new JSONObject(httpResponse.body())
+                                    .getJSONObject("error")
+                                    .get("message").toString();
+                        }
+                        showHttpRequestAlert(errorMessage);
                         loadKeySettingsScene();
                     });
                 }
@@ -163,12 +170,14 @@ public class RootController {
         alert.setHeaderText("Error during image loading");
         alert.setGraphic(null);
 
-        alert.getDialogPane().setContentText("Error during saving image to selected folder. Please, select another folder and try again.");
+        alert.getDialogPane().setContentText(
+                String.format("Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
+                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
 
-        alert.showAndWait();
+        alert.show();
     }
 
-    private void showHttpRequestAlert(HttpResponse<String> httpResponse) {
+    private void showHttpRequestAlert(String errorMessage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle("Error");
@@ -180,9 +189,7 @@ public class RootController {
         alert.setHeaderText("Error during image loading");
         alert.setGraphic(null);
 
-        alert.getDialogPane().setContentText(new JSONObject(httpResponse.body())
-                .getJSONObject("error")
-                .get("message").toString());
+        alert.getDialogPane().setContentText(errorMessage);
 
         alert.showAndWait();
     }

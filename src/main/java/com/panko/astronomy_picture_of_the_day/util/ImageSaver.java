@@ -20,13 +20,15 @@ public class ImageSaver {
             BufferedImage image = ImageIO.read(new URL(picture.getImgUrl()));
 
             String[] splitUrl = picture.getImgUrl().split("/");
-            String fileNameAndFormat = splitUrl[splitUrl.length - 1];
-            String filePathAndName = preferencesManager.readKey(PICTURES_FOLDER).concat(fileNameAndFormat);
-            picture.setLocalPath(filePathAndName);
+            String fileName = splitUrl[splitUrl.length - 1];
+            String absolutePath = preferencesManager.readKey(PICTURES_FOLDER)
+                    .concat("/")
+                    .concat(fileName);
+            picture.setLocalPath(absolutePath);
 
-            ImageIO.write(image, "jpg", new File(filePathAndName));
+            ImageIO.write(image, "jpg", new File(absolutePath));
 
-            logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", filePathAndName);
+            logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", absolutePath);
         } catch (IOException e) {
             logger.log(System.Logger.Level.ERROR, "Error during Image saving: {0}", e.getMessage());
             return false;

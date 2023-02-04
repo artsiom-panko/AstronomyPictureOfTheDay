@@ -55,7 +55,7 @@ public class SettingsController implements Initializable {
     private void saveNewApiKey() {
         preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());
         preferencesManager.saveKey(PICTURES_FOLDER, selectedFolderDirectory.getText());
-        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
+//        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
         rootController.process();
     }
