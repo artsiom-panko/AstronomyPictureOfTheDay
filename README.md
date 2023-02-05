@@ -1,4 +1,4 @@
-<img height="100" src="C:\Users\artsi\IdeaProjects\AstronomyPictureOfTheDay\src\main\resources\img\logo.ico" width="100"/>
+<img height="100" src="src\main\resources\img\logo.ico" width="100"/>
 
 ## Astronomy picture of the day
 Discover the cosmos! This JavaFX application performs only one single function - each day updates 
