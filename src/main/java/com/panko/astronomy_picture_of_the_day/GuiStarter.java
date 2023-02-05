@@ -31,7 +31,7 @@ public class GuiStarter extends Application {
         rootController.setStage(primaryStage);
 
         primaryStage.setTitle("Astronomy picture of the day");
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/img/logo.png")).toString(), true));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png"))));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 

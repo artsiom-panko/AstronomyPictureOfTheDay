@@ -118,9 +118,7 @@
                             </classPath>
                             <icon>src/main/resources/img/logo.ico</icon>
                             <jre>
-                                <minVersion>1.6.0</minVersion>
-                                <requiresJdk>preferJre</requiresJdk>
-                                <path>./win32/java</path>
+                                <path>%JAVA_HOME%;%PATH%</path>
                             </jre>
                             <versionInfo>
                                 <fileVersion>1.0.0.0</fileVersion>
@@ -130,7 +128,6 @@
                                 <productVersion>1.0.0.0</productVersion>
                                 <txtProductVersion>1.0.0.0</txtProductVersion>
                                 <productName>${project.name}</productName>
-<!--                                <companyName>howtodoinjava.com</companyName>-->
                                 <internalName>AstronomyPictureOfTheDay</internalName>
                                 <originalFilename>AstronomyPictureOfTheDay.exe</originalFilename>
                             </versionInfo>
