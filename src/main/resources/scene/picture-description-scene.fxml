@@ -7,22 +7,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="346.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController">
-   <children>
-      <Text fx:id="pictureTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="10.0" left="10.0" top="10.0" />
-         </VBox.margin>
-      </Text>
-      <HBox maxHeight="1.7976931348623157E308">
-          <TextArea fx:id="pictureDescription" editable="false" maxHeight="1.7976931348623157E308" prefHeight="338.0" prefWidth="616.0" text="This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years." wrapText="true">
-              <font>
-                  <Font name="sans-serif" size="14.0" />
-              </font>
-          </TextArea>
-      </HBox>
-   </children>
+<VBox prefHeight="346.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController">
+    <Text fx:id="pictureTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+        <font>
+          <Font name="System Bold" size="14.0"/>
+        </font>
+        <VBox.margin>
+          <Insets bottom="10.0" left="10.0" top="10.0"/>
+        </VBox.margin>
+    </Text>
+    <HBox maxHeight="1.7976931348623157E308">
+        <TextArea fx:id="pictureDescription" editable="false" maxHeight="1.7976931348623157E308" prefHeight="338.0"
+                  prefWidth="616.0"
+                  text="This cosmic expanse of dust, gas, and stars covers some 6 degrees on the sky in the heroic constellation Perseus. At upper left in the gorgeous skyscape is the intriguing young star cluster IC 348 and neighboring Flying Ghost Nebula with clouds of obscuring interstellar dust cataloged as Barnard 3 and 4. At right, another active star forming region NGC 1333 is connected by dark and dusty tendrils on the outskirts of the giant Perseus Molecular Cloud, about 850 light-years away. Other dusty nebulae are scattered around the field of view, along with the faint reddish glow of hydrogen gas. In fact, the cosmic dust tends to hide the newly formed stars and young stellar objects or protostars from prying optical telescopes. Collapsing due to self-gravity, the protostars form from the dense cores embedded in the molecular cloud. At the molecular cloud's estimated distance, this field of view would span over 90 light-years."
+                  wrapText="true">
+            <font>
+                <Font name="sans-serif" size="14.0"/>
+            </font>
+        </TextArea>
+    </HBox>
 </VBox>
