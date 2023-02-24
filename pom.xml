@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>com.panko</groupId>
     <artifactId>AstronomyPictureOfTheDay</artifactId>
     <version>1.0</version>
 
@@ -109,8 +109,8 @@
                         </goals>
                         <configuration>
                             <headerType>gui</headerType>
-                            <jar>${project.build.directory}/${artifactId}-${version}-shaded.jar</jar>
-                            <outfile>${project.build.directory}/Astronomy picture of the day ${version}.exe</outfile>
+                            <jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
+                            <outfile>${project.build.directory}/Astronomy picture of the day ${project.version}.exe</outfile>
                             <downloadUrl>https://java.com/download</downloadUrl>
                             <classPath>
                                 <mainClass>com.panko.astronomy_picture_of_the_day.MainApplication</mainClass>

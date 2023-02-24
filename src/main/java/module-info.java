@@ -1,4 +1,4 @@
-module com.example.astronomy_picture_of_the_day {
+module com.panko.astronomy_picture_of_the_day {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
