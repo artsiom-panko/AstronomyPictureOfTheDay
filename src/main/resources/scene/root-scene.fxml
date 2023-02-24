@@ -23,7 +23,7 @@
                     <Insets/>
                 </opaqueInsets>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="477.0">
+            <HBox fx:id="infoBlock" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="477.0">
                 <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
                         style="-fx-background-color: transparent;" text="Settings">
                     <cursor>

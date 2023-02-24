@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
@@ -34,8 +35,9 @@ public class RootController {
     private Stage primaryStage;
 
     @FXML
+    private HBox infoBlock;
+    @FXML
     private BorderPane rootContainer;
-
     @FXML
     private Text numberOfRocketLaunches;
 
@@ -67,6 +69,7 @@ public class RootController {
                 throw new RuntimeException(e);
             }
 
+            infoBlock.setVisible(false);
             showLaunchesCounter();
             rootContainer.setCenter(loadingScene);
 
@@ -84,6 +87,7 @@ public class RootController {
                         Platform.runLater(() -> {
                             loadPictureDescriptionScene(picture);
                             updateAndShowLaunchesCounter();
+                            infoBlock.setVisible(true);
                         });
                     }
                 } else {
