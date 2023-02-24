@@ -16,15 +16,18 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
+import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
 
 public class RootController {
 
@@ -32,6 +35,9 @@ public class RootController {
 
     @FXML
     private BorderPane rootContainer;
+
+    @FXML
+    private Text numberOfRocketLaunches;
 
     private final ImageSaver imageSaver = new ImageSaver();
 
@@ -61,6 +67,7 @@ public class RootController {
                 throw new RuntimeException(e);
             }
 
+            showLaunchesCounter();
             rootContainer.setCenter(loadingScene);
 
             new Thread(() -> {
@@ -74,7 +81,10 @@ public class RootController {
                         });
                     } else {
                         WallpaperChanger.setScreenImage(picture);
-                        Platform.runLater(() -> loadPictureDescriptionScene(picture));
+                        Platform.runLater(() -> {
+                            loadPictureDescriptionScene(picture);
+                            updateAndShowLaunchesCounter();
+                        });
                     }
                 } else {
                     Platform.runLater(() -> {
@@ -92,6 +102,28 @@ public class RootController {
                 }
             }).start();
         }
+    }
+
+    private void updateAndShowLaunchesCounter() {
+        String numberOfLaunches = Optional
+                .ofNullable(preferencesManager.readKey(NUMBER_OF_ROCKET_LAUNCHES))
+                .orElse("0");
+
+        String incrementedNumberOfLaunches = String.valueOf(Integer.parseInt(numberOfLaunches) + 1);
+
+        preferencesManager.saveKey(
+                NUMBER_OF_ROCKET_LAUNCHES,
+                incrementedNumberOfLaunches);
+
+        showLaunchesCounter();
+    }
+
+    private void showLaunchesCounter() {
+        String numberOfLaunches = Optional
+                .ofNullable(preferencesManager.readKey(NUMBER_OF_ROCKET_LAUNCHES))
+                .orElse("0");
+
+        numberOfRocketLaunches.setText(String.format("Rocket launches: %s", numberOfLaunches));
     }
 
     public void loadKeySettingsScene() {

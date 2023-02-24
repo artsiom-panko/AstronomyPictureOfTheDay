@@ -6,6 +6,7 @@ public class PreferencesManager {
     public static final String LANGUAGE = "language";
     public static final String NASA_API_KEY = "nasa.api.key";
     public static final String PICTURES_FOLDER = "folder";
+    public static final String NUMBER_OF_ROCKET_LAUNCHES = "apod.numberofrocketlaunches";
 
     private static final System.Logger logger = System.getLogger(PreferencesManager.class.getName());
 

@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.Cursor?>
-<BorderPane fx:id="rootContainer" prefHeight="380.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane fx:id="rootContainer" maxHeight="400.0" maxWidth="500.0" prefHeight="380.0" prefWidth="470.0"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.panko.astronomy_picture_of_the_day.controller.RootController">
     <bottom>
-        <HBox alignment="CENTER_RIGHT">
-            <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
-                    style="-fx-background-color: transparent;" text="Settings">
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#showAboutAlert" opacity="0.5"
-                    style="-fx-background-color: transparent;" text="About">
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
+        <HBox prefHeight="26.0" prefWidth="250.0">
+            <HBox alignment="CENTER_LEFT">
+                <Text fx:id="numberOfRocketLaunches" opacity="0.5" strokeType="OUTSIDE" strokeWidth="0.0"
+                      style="-fx-background-color: transparent;">
+                    <HBox.margin>
+                        <Insets left="5.0"/>
+                    </HBox.margin>
+                </Text>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="477.0">
+                <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
+                        style="-fx-background-color: transparent;" text="Settings">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false"
+                        onAction="#showAboutAlert" opacity="0.5" style="-fx-background-color: transparent;" text="About"
+                        textAlignment="RIGHT">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+            </HBox>
         </HBox>
     </bottom>
 </BorderPane>

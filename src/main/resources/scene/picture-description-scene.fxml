@@ -17,7 +17,7 @@
           <Insets bottom="10.0" left="10.0" top="10.0"/>
         </VBox.margin>
     </Text>
-    <HBox maxHeight="1.7976931348623157E308">
+    <HBox maxHeight="1.8">
         <TextArea fx:id="pictureDescription" editable="false" prefHeight="338.0" prefWidth="616.0" maxHeight="Infinity"
                   maxWidth="Infinity"
                   wrapText="true">
