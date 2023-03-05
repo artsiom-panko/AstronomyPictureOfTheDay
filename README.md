@@ -4,7 +4,7 @@
 Discover the cosmos! This JavaFX application performs only one single function - each day updates 
 your desktop image with a different photograph of our fascinating universe, 
 along with a brief explanation written by a professional astronomer.
-![](https://api.countapi.xyz/get/com.panko.astronomy_picture_of_the_day/launches)
+![Rocket launches: ](https://api.countapi.xyz/get/com.panko.astronomy_picture_of_the_day/launches)
 
 # Requirements
 - OS Windows 8+
