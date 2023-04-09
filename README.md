@@ -16,6 +16,7 @@ along with a brief explanation written by a professional astronomer.
 Open Personalization > Background > Picture > Choose a fit > Fit
 
 # Screenshots
+<img height="120" width="120" src="src\main\resources\img\shortcut_logo.png"/>
 <img height="300" width="350" src="src\main\resources\img\loading_screenshot_1.png"/>
 <img height="300" width="350" src="src\main\resources\img\loading_screenshot_2.png"/>
 
