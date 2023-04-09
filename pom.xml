@@ -28,17 +28,12 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20210307</version>
+            <version>20230227</version>
         </dependency>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.12.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna-platform</artifactId>
-            <version>5.5.0</version>
         </dependency>
 
         <!-- ============== For testing ==============-->
@@ -160,11 +155,8 @@
 
         <resources>
             <resource>
-                <directory>config</directory>
+                <directory>src/main/resources</directory>
                 <targetPath>${project.build.outputDirectory}</targetPath>
-                <includes>
-                    <include>application.properties</include>
-                </includes>
             </resource>
         </resources>
     </build>

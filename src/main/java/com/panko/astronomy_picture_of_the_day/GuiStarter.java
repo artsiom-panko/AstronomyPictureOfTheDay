@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
-
 // This class is necessary for avoiding "Error: JavaFX runtime components are missing,
 // and are required to run this application".
 // The trick is to use an extra starter class that does not inherit from javafx.application.Application

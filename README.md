@@ -22,3 +22,11 @@ Open Personalization > Background > Picture > Choose a fit > Fit
 # References
 - [NASA Astronomy Picture of the Day WebSite](https://apod.nasa.gov/apod/astropix.html)
 - [NASA Astronomy Picture of the Day API](https://data.nasa.gov/Space-Science/Astronomy-Picture-of-the-Day-API/ez2w-t8ua)
+
+## Building jar and exe 
+a) launch4j
+
+Run the next command manually or execute Maven 'package' phase
+```
+mvn package
+```
