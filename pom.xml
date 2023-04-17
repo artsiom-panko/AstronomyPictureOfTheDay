@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <app.name>Astronomy Picture Of The Day</app.name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -30,30 +33,11 @@
             <artifactId>json</artifactId>
             <version>20230227</version>
         </dependency>
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>5.12.1</version>
-        </dependency>
-
-        <!-- ============== For testing ==============-->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.loadui</groupId>
-            <artifactId>testFx</artifactId>
-            <version>3.1.2</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>net.java.dev.jna</groupId>-->
+        <!--            <artifactId>jna</artifactId>-->
+        <!--            <version>5.12.1</version>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -62,91 +46,140 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
+                <!--                <configuration>-->
+                <!--                    <release>14</release>-->
+                <!--                    <source>14</source>-->
+                <!--                    <target>14</target>-->
+                <!--                </configuration>-->
             </plugin>
 
+            <!-- Build an executable JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.7.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
-                    <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>shaded</shadedClassifierName>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.panko.astronomy_picture_of_the_day.MainApplication</mainClass>
-                        </transformer>
-                    </transformers>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
+
             <plugin>
-                <groupId>com.akathist.maven.plugins.launch4j</groupId>
-                <artifactId>launch4j-maven-plugin</artifactId>
-                <version>2.3.1</version>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.RC3</version>
+
+                <!-- Generating module-info.java descriptor -->
                 <executions>
                     <execution>
-                        <id>l4j-clui</id>
-                        <phase>package</phase>
+                        <id>generate-module-info</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>launch4j</goal>
+                            <goal>generate-module-info</goal>
                         </goals>
                         <configuration>
-                            <headerType>gui</headerType>
-                            <jar>${project.build.directory}/${project.artifactId}-${project.version}-shaded.jar</jar>
-                            <outfile>${project.build.directory}/Astronomy picture of the day ${project.version}.exe</outfile>
-                            <downloadUrl>https://java.com/download</downloadUrl>
-                            <classPath>
-                                <mainClass>com.panko.astronomy_picture_of_the_day.MainApplication</mainClass>
-                                <preCp>anything</preCp>
-                            </classPath>
-                            <icon>src/main/resources/img/logo.ico</icon>
-                            <jre>
-                                <path>%JAVA_HOME%;%PATH%</path>
-                            </jre>
-                            <versionInfo>
-                                <fileVersion>1.0.0.0</fileVersion>
-                                <txtFileVersion>${project.version}</txtFileVersion>
-                                <fileDescription>${project.name}</fileDescription>
-                                <copyright>2023 Artsiom Panko</copyright>
-                                <productVersion>1.0.0.0</productVersion>
-                                <txtProductVersion>1.0.0.0</txtProductVersion>
-                                <productName>${project.name}</productName>
-                                <internalName>AstronomyPictureOfTheDay</internalName>
-                                <originalFilename>AstronomyPictureOfTheDay.exe</originalFilename>
-                            </versionInfo>
+                            <modules>
+                                <!--                                <module>-->
+                                <!--                                    <artifact>-->
+                                <!--                                        <groupId>com.panko.astronomy_picture_of_the_day</groupId>-->
+                                <!--                                        <artifactId>AstronomyPictureOfTheDay</artifactId>-->
+                                <!--                                        <version>1.0</version>-->
+                                <!--                                    </artifact>-->
+                                <!--                                </module>-->
+                                <module>
+                                    <artifact>
+                                        <groupId>org.json</groupId>
+                                        <artifactId>json</artifactId>
+                                        <version>20230227</version>
+                                    </artifact>
+                                    <moduleInfo>
+                                        <name>org.json</name>
+                                        <exports>
+                                            com.panko.astronomy_picture_of_the_day;
+                                            com.panko.astronomy_picture_of_the_day.entity;
+                                            com.panko.astronomy_picture_of_the_day.service;
+                                            com.panko.astronomy_picture_of_the_day.controller;
+                                            com.panko.astronomy_picture_of_the_day.util;
+                                        </exports>
+                                        <requires>
+                                            javafx.controls;
+                                            javafx.fxml;
+                                            javafx.graphics;
+                                            org.json;
+                                            java.desktop;
+                                            java.net.http;
+                                            com.sun.jna;
+                                            java.prefs;
+                                        </requires>
+                                        <opens>
+                                            com.panko.astronomy_picture_of_the_day to javafx.fxml;
+                                            com.panko.astronomy_picture_of_the_day.controller to javafx.fxml;
+                                            com.panko.astronomy_picture_of_the_day.service to javafx.fxml;
+                                            com.panko.astronomy_picture_of_the_day.util to javafx.fxml;
+                                        </opens>
+                                    </moduleInfo>
+                                </module>
+<!--                                <module>-->
+<!--                                    <artifact>-->
+<!--                                        <groupId>org.openjfx</groupId>-->
+<!--                                        <artifactId>javafx-graphics</artifactId>-->
+<!--                                        <version>20</version>-->
+<!--                                    </artifact>-->
+<!--                                </module>-->
+                            </modules>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
 
-            <!-- JAVAFX -->
-            <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
-                <executions>
+                    <!-- Adding a module descriptor to the project JAR -->
                     <execution>
-                        <id>default-cli</id>
+                        <id>add-module-infos</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
                         <configuration>
-                            <mainClass>com.panko.astronomy_picture_of_the_day.MainApplication</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
+                            <!--                            <jdepsExtraArgs>&#45;&#45;multi-release</jdepsExtraArgs>-->
+                            <!--                            <jvmVersion>11</jvmVersion>-->
+                            <failOnWarning>true</failOnWarning>
+                            <module>
+                                <moduleInfo>
+                                    <name>AstronomyPictureOfTheDay</name>
+                                    <exports>
+                                        *;
+                                    </exports>
+                                </moduleInfo>
+                                <!--                                                    <moduleInfo>-->
+                                <!--                                                        <name>org.json</name>-->
+                                <!--                                                        <exports>-->
+                                <!--                                                            *;-->
+                                <!--                                                        </exports>-->
+                                <!--                                                    </moduleInfo>-->
+                            </module>
+                        </configuration>
+                    </execution>
+
+                    <!-- Creating modular runtime images -->
+                    <execution>
+                        <id>create-runtime-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>create-runtime-image</goal>
+                        </goals>
+                        <configuration>
+                            <modulePath>
+                                <path>${project.build.directory}/modules/</path>
+                            </modulePath>
+                            <modules>
+                                <module>AstronomyPictureOfTheDay</module>
+                            </modules>
+                            <outputDirectory>
+                                ${project.build.directory}/jlink-image
+                            </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

@@ -26,8 +26,21 @@ Open Personalization > Background > Picture > Choose a fit > Fit
 
 ## Building jar and exe 
 a) launch4j
+Required installed JRE 1.8 (52)
 
 Run the next command manually or execute Maven 'package' phase
 ```
 mvn package
+```
+
+a) jlink
+
+Run the next command manually or execute Maven 'package' phase
+Any OpenJDK 17 Installation (download from AdoptOpenJDK)
+```
+mvn clean javafx:jlink
+```
+
+```
+mvn clean moditect:generate-module-info -X
 ```

@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
-import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
+import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.NASA_API_KEY;
 import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
 
 public class RootController {
