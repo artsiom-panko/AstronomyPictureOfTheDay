@@ -1,6 +1,6 @@
-package com.panko.astronomy_picture_of_the_day.service;
+package com.panko.apod.service;
 
-import com.panko.astronomy_picture_of_the_day.MainApplication;
+import com.panko.apod.MainApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 

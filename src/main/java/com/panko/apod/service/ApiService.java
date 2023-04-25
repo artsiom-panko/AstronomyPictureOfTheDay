@@ -1,4 +1,4 @@
-package com.panko.astronomy_picture_of_the_day.service;
+package com.panko.apod.service;
 
 import java.io.IOException;
 import java.lang.System.Logger;

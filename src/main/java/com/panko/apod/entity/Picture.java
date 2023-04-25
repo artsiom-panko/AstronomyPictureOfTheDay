@@ -1,4 +1,4 @@
-package com.panko.astronomy_picture_of_the_day.entity;
+package com.panko.apod.entity;
 
 import java.time.LocalDate;
 

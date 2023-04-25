@@ -13,7 +13,7 @@
 
 <VBox alignment="CENTER" prefHeight="341.0" prefWidth="460.0" spacing="20.0" xmlns="http://javafx.com/javafx/11"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.panko.astronomy_picture_of_the_day.controller.SettingsController">
+      fx:controller="com.panko.apod.controller.SettingsController">
     <padding>
         <Insets left="20.0" right="20.0"/>
     </padding>

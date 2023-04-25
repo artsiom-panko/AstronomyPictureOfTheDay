@@ -1,4 +1,4 @@
-package com.panko.astronomy_picture_of_the_day.util;
+package com.panko.apod.util;
 
 import java.util.prefs.Preferences;
 

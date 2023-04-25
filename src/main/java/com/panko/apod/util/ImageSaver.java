@@ -1,6 +1,6 @@
-package com.panko.astronomy_picture_of_the_day.util;
+package com.panko.apod.util;
 
-import com.panko.astronomy_picture_of_the_day.entity.Picture;
+import com.panko.apod.entity.Picture;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.PICTURES_FOLDER;
+import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
 public class ImageSaver {
     private final PreferencesManager preferencesManager = new PreferencesManager();

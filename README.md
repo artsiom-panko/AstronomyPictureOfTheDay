@@ -27,7 +27,14 @@ Open Personalization > Background > Picture > Choose a fit > Fit
 ## Building jar and exe 
 a) launch4j
 
+that runs without an installer and a JRE
+to download the .exe file and run it out of the box, without an installer,
+even if they don't have a JRE on their computer.
+https://stackoverflow.com/questions/69811401/how-to-create-a-standalone-exe-in-java-that-runs-without-an-installer-and-a-jr
+
 Run the next command manually or execute Maven 'package' phase
 ```
-mvn package
+mvn clean compile exec:java
+
+mvn clean compile javafx:jlink jpackage:jpackage
 ```

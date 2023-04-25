@@ -1,6 +1,6 @@
-package com.panko.astronomy_picture_of_the_day;
+package com.panko.apod;
 
-import com.panko.astronomy_picture_of_the_day.controller.RootController;
+import com.panko.apod.controller.RootController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,10 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-// This class is necessary for avoiding "Error: JavaFX runtime components are missing,
-// and are required to run this application".
-// The trick is to use an extra starter class that does not inherit from javafx.application.Application
-public class GuiStarter extends Application {
+public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch(args);

@@ -1,7 +1,7 @@
-package com.panko.astronomy_picture_of_the_day.controller;
+package com.panko.apod.controller;
 
-import com.panko.astronomy_picture_of_the_day.MainApplication;
-import com.panko.astronomy_picture_of_the_day.entity.Picture;
+import com.panko.apod.MainApplication;
+import com.panko.apod.entity.Picture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextArea;

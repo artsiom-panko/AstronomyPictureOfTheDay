@@ -1,9 +1,8 @@
-package com.panko.astronomy_picture_of_the_day.controller;
+package com.panko.apod.controller;
 
-import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
+import com.panko.apod.util.PreferencesManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.DirectoryChooser;
@@ -13,7 +12,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.*;
+import static com.panko.apod.util.PreferencesManager.*;
 
 public class SettingsController implements Initializable {
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 <VBox prefHeight="346.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController">
+      fx:controller="com.panko.apod.controller.PictureDescriptionController">
     <Text fx:id="pictureTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
         <font>
           <Font name="System Bold" size="14.0"/>

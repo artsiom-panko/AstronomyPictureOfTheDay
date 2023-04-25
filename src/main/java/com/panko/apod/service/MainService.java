@@ -1,7 +1,7 @@
-package com.panko.astronomy_picture_of_the_day.service;
+package com.panko.apod.service;
 
-import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
-import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
+import com.panko.apod.util.PreferencesManager;
+import com.panko.apod.util.ImageSaver;
 
 public class MainService {
     private final ApiService apiService = new ApiService();

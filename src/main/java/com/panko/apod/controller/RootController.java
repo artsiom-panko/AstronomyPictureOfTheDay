@@ -1,12 +1,12 @@
-package com.panko.astronomy_picture_of_the_day.controller;
+package com.panko.apod.controller;
 
-import com.panko.astronomy_picture_of_the_day.MainApplication;
-import com.panko.astronomy_picture_of_the_day.entity.Picture;
-import com.panko.astronomy_picture_of_the_day.service.ApiService;
-import com.panko.astronomy_picture_of_the_day.service.HttpResponseHandlerService;
-import com.panko.astronomy_picture_of_the_day.util.ImageSaver;
-import com.panko.astronomy_picture_of_the_day.util.PreferencesManager;
-import com.panko.astronomy_picture_of_the_day.util.WallpaperChanger;
+import com.panko.apod.MainApplication;
+import com.panko.apod.entity.Picture;
+import com.panko.apod.service.ApiService;
+import com.panko.apod.service.HttpResponseHandlerService;
+import com.panko.apod.util.ImageSaver;
+import com.panko.apod.util.PreferencesManager;
+import com.panko.apod.util.WallpaperChanger;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,16 +19,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.panko.astronomy_picture_of_the_day.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
-import static com.panko.astronomy_picture_of_the_day.service.MainService.NASA_API_KEY;
-import static com.panko.astronomy_picture_of_the_day.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
+import static com.panko.apod.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
+import static com.panko.apod.service.MainService.NASA_API_KEY;
+import static com.panko.apod.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
 
 public class RootController {
 
@@ -96,9 +96,7 @@ public class RootController {
                         if (httpResponse == null) {
                             errorMessage = "Connection problem. \nPlease, try later.";
                         } else {
-                            errorMessage = new JSONObject(httpResponse.body())
-                                    .getJSONObject("error")
-                                    .get("message").toString();
+                            errorMessage = null;
                         }
                         showHttpRequestAlert(errorMessage);
                         loadKeySettingsScene();
