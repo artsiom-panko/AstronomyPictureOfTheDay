@@ -32,9 +32,20 @@ to download the .exe file and run it out of the box, without an installer,
 even if they don't have a JRE on their computer.
 https://stackoverflow.com/questions/69811401/how-to-create-a-standalone-exe-in-java-that-runs-without-an-installer-and-a-jr
 
-Run the next command manually or execute Maven 'package' phase
+Run the next command manually
 ```
-mvn clean compile exec:java
-
+mvn clean compile javafx:jlink jpackage:jpackage -X
+```
+```
 mvn clean compile javafx:jlink jpackage:jpackage
+
+mvn clean resources:copy-dependencies
+
+mvn clean moditect:generate-module-info -X
+
+jdeps
+    --module-path C:\Users\artsi\.m2\repository\org\json\json\20230227
+    --generate-module-info target\jdeps-modules C:\Users\artsi\.m2\repository\org\json\json\20230227\json-20230227.jar
+    
+    
 ```
