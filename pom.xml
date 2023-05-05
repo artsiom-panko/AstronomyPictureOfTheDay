@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>17</version.java>
 
+        <version.jna>5.12.1</version.jna>
         <version.javafx>20</version.javafx>
         <version.openjfx>19.0.2.1</version.openjfx>
     </properties>
@@ -44,7 +45,7 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>5.12.1</version>
+            <version>${version.jna}</version>
         </dependency>
     </dependencies>
 
@@ -80,6 +81,8 @@
                 </executions>
             </plugin>
 
+            <!-- Need to compile App (without dependencies) to JAR file
+            and put it to /modules folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -96,7 +99,8 @@
                 <executions>
 
                     <!-- Generating module-info.java descriptors for  -->
-                    <!-- into /moditect folder.  -->
+                    <!-- legacy artifacts (without module-info.java)
+                    into /moditect folder.  -->
                     <execution>
                         <id>generate-module-info</id>
                         <phase>generate-sources</phase>
@@ -111,18 +115,19 @@
                                         <artifactId>json</artifactId>
                                         <version>20230227</version>
                                     </artifact>
-                                    <!--                                    <moduleInfo>-->
-                                    <!--                                        <name>org.json</name>-->
-                                    <!--                                        <exports>-->
-                                    <!--                                            *;-->
-                                    <!--                                        </exports>-->
-                                    <!--                                    </moduleInfo>-->
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>net.java.dev.jna</groupId>
+                                        <artifactId>jna</artifactId>
+                                        <version>${version.jna}</version>
+                                    </artifact>
                                 </module>
                             </modules>
                         </configuration>
                     </execution>
 
-                    <!-- To add JARs with module descriptors to the
+                    <!-- Build and add JARs with module descriptors to the
                      /modules folder -->
                     <execution>
                         <id>add-module-infos</id>
@@ -183,6 +188,18 @@
                                         }
                                     </moduleInfoSource>
                                 </module>
+
+                                <module>
+                                    <artifact>
+                                        <groupId>net.java.dev.jna</groupId>
+                                        <artifactId>jna</artifactId>
+                                        <version>${version.jna}</version>
+                                    </artifact>
+                                    <moduleInfoSource>
+                                        module com.sun.jna {
+                                        }
+                                    </moduleInfoSource>
+                                </module>
                             </modules>
                         </configuration>
                     </execution>
@@ -201,7 +218,10 @@
                             </modulePath>
                             <modules>
                                 <module>com.panko.apod</module>
+
                                 <module>org.json</module>
+                                <module>com.sun.jna</module>
+
                                 <module>javafx.fxml</module>
                                 <module>javafx.graphics</module>
                                 <module>javafx.controls</module>

@@ -1,7 +1,10 @@
 package com.panko.apod.service;
 
+import com.panko.apod.entity.Picture;
 import com.panko.apod.util.PreferencesManager;
 import com.panko.apod.util.ImageSaver;
+
+import java.net.http.HttpResponse;
 
 public class MainService {
     private final ApiService apiService = new ApiService();
@@ -11,7 +14,7 @@ public class MainService {
 
     public static final String NASA_API_KEY = "nasa.api.key";
 
-    public void process() {
+//    public void process() {
 //
 //        Picture picture = mainService.process();
 //        imageDescription.setText(picture.getDescription());
@@ -23,8 +26,8 @@ public class MainService {
 //        WallpaperChangerService.setScreenImage(picture);
 //
 //        return picture;
-    }
-
+//    }
+//
 //    public void test() {
 //        String key = apiKeyService.readKey(NASA_API_KEY);
 //        HttpResponse<String> httpResponse = apiService.sendHttpRequest(key);
