@@ -12,7 +12,7 @@ can download the .exe file and run it out of the box, without JRE on your comput
 
 # Requirements
 - OS Windows 8+
-- Generate API Key on [NASA Astronomy Picture of the Day API](https://data.nasa.gov/Space-Science/Astronomy-Picture-of-the-Day-API/ez2w-t8ua)
+- Generated API Key on [NASA Astronomy Picture of the Day API](https://data.nasa.gov/Space-Science/Astronomy-Picture-of-the-Day-API/ez2w-t8ua)
 - (Optional) Set background image type - **Fit** on System settings page. 
 Open Personalization > Background > Picture > Choose a fit > Fit
 

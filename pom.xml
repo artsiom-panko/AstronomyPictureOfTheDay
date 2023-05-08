@@ -14,6 +14,7 @@
         <project.version>0.8</project.version>
         <project.name>Astronomy Picture Of The Day</project.name>
         <mainClass>com.panko.apod.MainApplication</mainClass>
+        <moduleName>com.panko.apod</moduleName>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>17</version.java>
@@ -220,7 +221,7 @@
                                 <path>${project.build.directory}/modules</path>
                             </modulePath>
                             <modules>
-                                <module>com.panko.apod</module>
+                                <module>${moduleName}</module>
 
                                 <module>org.json</module>
                                 <module>com.sun.jna</module>
@@ -232,6 +233,7 @@
                             <launcher>
                                 <name>apodLauncher</name>
                                 <module>com.panko.apod/com.panko.apod.MainApplication</module>
+<!--                                <module>${moduleName}/${mainClass}</module>-->
                             </launcher>
                             <outputDirectory>
                                 ${project.build.directory}/jlink-image
@@ -252,13 +254,18 @@
                 <version>1.4.0</version>
                 <configuration>
                     <name>${project.name}</name>
-                    <mainClass>${mainClass}</mainClass>
                     <appVersion>${project.version}</appVersion>
                     <vendor>com.panko</vendor>
+
+                    <mainClass>${mainClass}</mainClass>
                     <destination>target/dist</destination>
                     <module>com.panko.apod/MainApplication</module>
                     <runtimeImage>target/jlink-image</runtimeImage>
                     <icon>src/main/resources/img/logo.ico</icon>
+
+                    <winMenu>true</winMenu>
+                    <winShortcut>true</winShortcut>
+                    <winDirChooser>true</winDirChooser>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
