@@ -20,7 +20,6 @@
         <version.java>17</version.java>
 
         <version.jna>5.12.1</version.jna>
-        <version.javafx>20</version.javafx>
         <version.openjfx>19.0.2.1</version.openjfx>
     </properties>
 
@@ -38,7 +37,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>${version.javafx}</version>
+            <version>${version.openjfx}</version>
         </dependency>
 
         <dependency>
@@ -161,7 +160,7 @@
                                     <artifact>
                                         <groupId>org.openjfx</groupId>
                                         <artifactId>javafx-graphics</artifactId>
-                                        <version>${version.javafx}</version>
+                                        <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
                                         module javafx.graphics {
@@ -173,7 +172,7 @@
                                     <artifact>
                                         <groupId>org.openjfx</groupId>
                                         <artifactId>javafx-fxml</artifactId>
-                                        <version>${version.javafx}</version>
+                                        <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
                                         module javafx.fxml {
@@ -185,7 +184,7 @@
                                     <artifact>
                                         <groupId>org.openjfx</groupId>
                                         <artifactId>javafx-controls</artifactId>
-                                        <version>${version.javafx}</version>
+                                        <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
                                         module javafx.controls {
@@ -209,7 +208,8 @@
                     </execution>
 
                     <!-- To create a modular runtime image
-                    (Compiled app with a ready-to-run Shell script)-->
+                    (Compiled app with a ready-to-run Shell script)
+                    into a /jlink-image folder -->
                     <execution>
                         <id>create-runtime-image</id>
                         <phase>package</phase>
@@ -233,7 +233,7 @@
                             <launcher>
                                 <name>apodLauncher</name>
                                 <module>com.panko.apod/com.panko.apod.MainApplication</module>
-<!--                                <module>${moduleName}/${mainClass}</module>-->
+                                <!--                                <module>${moduleName}/${mainClass}</module>-->
                             </launcher>
                             <outputDirectory>
                                 ${project.build.directory}/jlink-image
