@@ -64,7 +64,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Copying all required JAR dependencies into the /libs folder -->
+            <!-- Copying all required JAR dependencies into the /modules folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -77,14 +77,14 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                ${project.build.directory}/libs
+                                ${project.build.directory}/modules
                             </outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Need to compile App (without dependencies) to JAR file
+            <!-- Compile App (without dependencies) to JAR file
             and put it to /modules folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -102,7 +102,7 @@
                 <executions>
 
                     <!-- Generating module-info.java descriptors for  -->
-                    <!-- legacy artifacts (without module-info.java)
+                    <!-- legacy artifacts (which don't have module-info.java)
                     into /moditect folder.  -->
                     <execution>
                         <id>generate-module-info</id>
@@ -163,7 +163,7 @@
                                         <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
-                                        module javafx.graphics {
+                                        module javafx.graphicsEmpty {
                                         }
                                     </moduleInfoSource>
                                 </module>
@@ -175,7 +175,7 @@
                                         <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
-                                        module javafx.fxml {
+                                        module javafx.fxmlEmpty {
                                         }
                                     </moduleInfoSource>
                                 </module>
@@ -187,7 +187,7 @@
                                         <version>${version.openjfx}</version>
                                     </artifact>
                                     <moduleInfoSource>
-                                        module javafx.controls {
+                                        module javafx.controlsEmpty {
                                         }
                                     </moduleInfoSource>
                                 </module>
@@ -232,8 +232,7 @@
                             </modules>
                             <launcher>
                                 <name>apodLauncher</name>
-                                <module>com.panko.apod/com.panko.apod.MainApplication</module>
-                                <!--                                <module>${moduleName}/${mainClass}</module>-->
+                                <module>${moduleName}/${mainClass}</module>
                             </launcher>
                             <outputDirectory>
                                 ${project.build.directory}/jlink-image
