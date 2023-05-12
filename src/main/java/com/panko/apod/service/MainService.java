@@ -14,14 +14,14 @@ public class MainService {
 
     public static final String NASA_API_KEY = "nasa.api.key";
 
-//    public void process() {
+//    public void launchMainThread() {
 //
-//        Picture picture = mainService.process();
+//        Picture picture = mainService.launchMainThread();
 //        imageDescription.setText(picture.getDescription());
 //
 //
 //        HttpResponse<String> httpResponse = apiService.sendHttpRequest(key);
-//        Picture picture = responseHandlerService.handleResponse(httpResponse);
+//        Picture picture = responseHandlerService.parseHttpResponseToPicture(httpResponse);
 //        imageWriterService.writePictureToFolder(picture);
 //        WallpaperChangerService.setScreenImage(picture);
 //
@@ -31,7 +31,7 @@ public class MainService {
 //    public void test() {
 //        String key = apiKeyService.readKey(NASA_API_KEY);
 //        HttpResponse<String> httpResponse = apiService.sendHttpRequest(key);
-//        Picture picture = responseHandlerService.handleResponse(httpResponse);
+//        Picture picture = responseHandlerService.parseHttpResponseToPicture(httpResponse);
 //        imageWriterService.writePictureToFolder(picture);
 //        WallpaperChangerService.setScreenImage(picture);
 //

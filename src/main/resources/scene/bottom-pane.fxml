@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox alignment="CENTER_RIGHT" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.panko.apod.controller.RootController">
+      fx:controller="com.panko.apod.controller.MainController">
 
     <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
             style="-fx-background-color: transparent;" text="Settings">

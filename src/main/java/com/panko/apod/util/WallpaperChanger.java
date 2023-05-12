@@ -13,6 +13,6 @@ public class WallpaperChanger {
     }
 
     public static void setScreenImage(Picture picture) {
-
+        User32.INSTANCE.SystemParametersInfo(0x0014, 0, picture.getLocalPath(), 1);
     }
 }

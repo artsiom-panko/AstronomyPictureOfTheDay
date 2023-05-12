@@ -24,12 +24,12 @@ public class SettingsController implements Initializable {
     private ToggleGroup languageGroup;
 
     private Stage primaryStage;
-    private RootController rootController;
+    private MainController mainController;
 
     private final PreferencesManager preferencesManager = new PreferencesManager();
 
-    public void setRootController(RootController rootController) {
-        this.rootController = rootController;
+    public void setRootController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     public void setRootStage(Stage primaryStage) {
@@ -56,7 +56,7 @@ public class SettingsController implements Initializable {
         preferencesManager.saveKey(PICTURES_FOLDER, selectedFolderDirectory.getText());
 //        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
-        rootController.process();
+        mainController.launchMainThread();
     }
 
     @FXML

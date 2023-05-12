@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="rootContainer" maxHeight="400.0" maxWidth="500.0" prefHeight="380.0" prefWidth="470.0"
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.panko.apod.controller.RootController">
+            fx:controller="com.panko.apod.controller.MainController">
     <bottom>
         <HBox prefHeight="26.0" prefWidth="250.0">
             <HBox alignment="CENTER_LEFT">

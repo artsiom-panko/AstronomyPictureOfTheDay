@@ -19,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-//import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
@@ -30,7 +29,7 @@ import static com.panko.apod.controller.PictureDescriptionController.PICTURE_DES
 import static com.panko.apod.service.MainService.NASA_API_KEY;
 import static com.panko.apod.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
 
-public class RootController {
+public class MainController {
 
     private Stage primaryStage;
 
@@ -47,13 +46,13 @@ public class RootController {
     private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseHandlerService httpResponseHandlerService = new HttpResponseHandlerService();
 
-    private static final System.Logger logger = System.getLogger(RootController.class.getName());
+    private static final System.Logger logger = System.getLogger(MainController.class.getName());
 
     public void setStage(Stage stage) {
         this.primaryStage = stage;
     }
 
-    public void process() {
+    public void launchMainThread() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
@@ -76,7 +75,7 @@ public class RootController {
             new Thread(() -> {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
                 if (httpResponse != null && httpResponse.statusCode() == 200) {
-                    Picture picture = httpResponseHandlerService.handleResponse(httpResponse);
+                    Picture picture = httpResponseHandlerService.parseHttpResponseToPicture(httpResponse);
                     if (!imageSaver.savePictureToFolder(picture)) {
                         Platform.runLater(() -> {
                             showPictureSaveAlert();
