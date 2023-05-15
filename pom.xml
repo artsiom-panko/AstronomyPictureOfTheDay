@@ -85,7 +85,8 @@
             </plugin>
 
             <!-- Compile App (without dependencies) to JAR file
-            and put it to /modules folder -->
+            and put it to /modules folder.
+            https://github.com/moditect/moditect#creating-modular-runtime-images -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -246,7 +247,8 @@
             </plugin>
 
             <!-- Need to compile App with all the dependencies to executable installer
-             into a /dist folder -->
+             into a /dist folder.
+             https://github.panteleyev.org/jpackage-maven-plugin/usage.html -->
             <plugin>
                 <groupId>org.panteleyev</groupId>
                 <artifactId>jpackage-maven-plugin</artifactId>
@@ -254,11 +256,11 @@
                 <configuration>
                     <name>${project.name}</name>
                     <appVersion>${project.version}</appVersion>
-                    <vendor>com.panko</vendor>
+                    <vendor>Artsiom Panko</vendor>
 
                     <mainClass>${mainClass}</mainClass>
                     <destination>target/dist</destination>
-                    <module>com.panko.apod/MainApplication</module>
+                    <module>${moduleName}/${mainClass}</module>
                     <runtimeImage>target/jlink-image</runtimeImage>
                     <icon>src/main/resources/img/logo.ico</icon>
 
