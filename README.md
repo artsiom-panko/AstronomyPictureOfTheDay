@@ -45,4 +45,4 @@ mvn clean package jpackage:jpackage
 
 
 ## TO-DO plans
-- To make .exe file which can run out of the box, without an installer
+- Good error handling

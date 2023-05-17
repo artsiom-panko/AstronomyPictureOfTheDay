@@ -54,55 +54,61 @@ public class MainController {
 
     public void launchMainThread() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
+        apiKey = null;
 
         if (apiKey == null || apiKey.isBlank()) {
             loadKeySettingsScene();
         } else {
-            logger.log(System.Logger.Level.INFO, "Load loading scene");
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
-            Pane loadingScene;
-            try {
-                loadingScene = loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            // TODO Rename method
+            load(apiKey);
+        }
+    }
 
-            infoBlock.setVisible(false);
-            showLaunchesCounter();
-            rootContainer.setCenter(loadingScene);
+    public void load(String apiKey) {
+        logger.log(System.Logger.Level.INFO, "Load loading scene");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
+        Pane loadingScene;
+        try {
+            loadingScene = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-            new Thread(() -> {
-                HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-                if (httpResponse != null && httpResponse.statusCode() == 200) {
-                    Picture picture = httpResponseHandlerService.parseHttpResponseToPicture(httpResponse);
-                    if (!imageSaver.savePictureToFolder(picture)) {
-                        Platform.runLater(() -> {
-                            showPictureSaveAlert();
-                            loadKeySettingsScene();
-                        });
-                    } else {
-                        WallpaperChanger.setScreenImage(picture);
-                        Platform.runLater(() -> {
-                            loadPictureDescriptionScene(picture);
-                            updateAndShowLaunchesCounter();
-                            infoBlock.setVisible(true);
-                        });
-                    }
-                } else {
+        infoBlock.setVisible(false);
+        showLaunchesCounter();
+        rootContainer.setCenter(loadingScene);
+
+        new Thread(() -> {
+            HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
+            if (httpResponse != null && httpResponse.statusCode() == 200) {
+                Picture picture = httpResponseHandlerService.parseHttpResponseToPicture(httpResponse);
+                if (!imageSaver.savePictureToFolder(picture)) {
                     Platform.runLater(() -> {
-                        String errorMessage;
-                        if (httpResponse == null) {
-                            errorMessage = "Connection problem. \nPlease, try later.";
-                        } else {
-                            errorMessage = null;
-                        }
-                        showHttpRequestAlert(errorMessage);
+                        showPictureSaveAlert();
                         loadKeySettingsScene();
                     });
+                } else {
+                    WallpaperChanger.setScreenImage(picture);
+                    Platform.runLater(() -> {
+                        loadPictureDescriptionScene(picture);
+                        updateAndShowLaunchesCounter();
+                        infoBlock.setVisible(true);
+                    });
                 }
-            }).start();
-        }
+            } else {
+                Platform.runLater(() -> {
+                    String errorMessage;
+                    if (httpResponse == null) {
+                        errorMessage = "Connection problem. \nPlease, try later.";
+                    } else {
+                        errorMessage = null;
+                    }
+                    showHttpRequestAlert(errorMessage);
+                    loadKeySettingsScene();
+                });
+            }
+        }).start();
     }
 
     private void updateAndShowLaunchesCounter() {
