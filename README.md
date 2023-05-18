@@ -45,4 +45,9 @@ mvn clean package jpackage:jpackage
 
 
 ## TO-DO plans
-- Good error handling
+- To add Error handling
+- To add API key verification after input
+- Fix all the Critical sonarlint issues
+- To add update checker
+- (optional) To add number of launches
+- (optional) Multi languages support
