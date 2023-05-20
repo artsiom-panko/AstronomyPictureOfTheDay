@@ -10,10 +10,10 @@ import java.net.URL;
 
 import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
-public class ImageSaver {
+public class PictureSaver {
     private final PreferencesManager preferencesManager = new PreferencesManager();
 
-    private static final System.Logger logger = System.getLogger(ImageSaver.class.getName());
+    private static final System.Logger logger = System.getLogger(PictureSaver.class.getName());
 
     public boolean savePictureToFolder(Picture picture) {
         try {
@@ -22,11 +22,14 @@ public class ImageSaver {
             String[] splitUrl = picture.getImgUrl().split("/");
             String fileName = splitUrl[splitUrl.length - 1];
             String absolutePath = preferencesManager.readKey(PICTURES_FOLDER)
-                    .concat("/")
+                    .concat("\\")
                     .concat(fileName);
             picture.setLocalPath(absolutePath);
 
-            ImageIO.write(image, "jpg", new File(absolutePath));
+            File fileFir = new File(absolutePath);
+            fileFir.mkdirs();
+
+            ImageIO.write(image, "jpg", fileFir);
 
             logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", absolutePath);
         } catch (IOException e) {

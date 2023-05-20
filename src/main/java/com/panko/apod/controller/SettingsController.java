@@ -58,7 +58,7 @@ public class SettingsController implements Initializable {
     @FXML
     private void saveNewApiKey() {
         Path applicationAbsolutePath = FileSystems.getDefault().getPath("").toAbsolutePath();
-        String folderWithPicturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
+        String folderWithPicturesPath = applicationAbsolutePath.toString().concat("\\pictures.jpg\\");
 
         preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());
         preferencesManager.saveKey(PICTURES_FOLDER, folderWithPicturesPath);

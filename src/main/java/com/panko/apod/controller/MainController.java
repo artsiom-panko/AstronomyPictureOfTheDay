@@ -3,12 +3,11 @@ package com.panko.apod.controller;
 import com.panko.apod.MainApplication;
 import com.panko.apod.entity.Picture;
 import com.panko.apod.service.ApiService;
-import com.panko.apod.service.HttpResponseHandlerService;
-import com.panko.apod.util.ImageSaver;
+import com.panko.apod.service.HttpResponseParsingService;
+import com.panko.apod.util.PictureSaver;
 import com.panko.apod.util.PreferencesManager;
 import com.panko.apod.util.WallpaperChanger;
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -25,9 +24,9 @@ import java.net.http.HttpResponse;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.panko.apod.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
-import static com.panko.apod.service.MainService.NASA_API_KEY;
+import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
 import static com.panko.apod.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
+import static com.panko.apod.controller.PictureDescriptionController.PICTURE_DESCRIPTION_SCENE_PATH;
 
 public class MainController {
 
@@ -36,15 +35,20 @@ public class MainController {
     @FXML
     private HBox infoBlock;
     @FXML
-    private BorderPane rootContainer;
+    private BorderPane mainPane;
     @FXML
     private Text numberOfRocketLaunches;
 
-    private final ImageSaver imageSaver = new ImageSaver();
+    private final PictureSaver pictureSaver = new PictureSaver();
 
     private final ApiService apiService = new ApiService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
-    private final HttpResponseHandlerService httpResponseHandlerService = new HttpResponseHandlerService();
+    private final HttpResponseParsingService httpResponseParsingService = new HttpResponseParsingService();
+
+    private static final String SCENE_ABOUT = "/scene/about.fxml";
+    private static final String SCENE_LOADING = "/scene/loading-scene.fxml";
+    private static final String SCENE_SETTINGS = "/scene/settings-scene.fxml";
+    private static final String SCENE_DESCRIPTION =  "/scene/picture-description-scene.fxml";
 
     private static final System.Logger logger = System.getLogger(MainController.class.getName());
 
@@ -54,61 +58,77 @@ public class MainController {
 
     public void launchMainThread() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
-        apiKey = null;
 
         if (apiKey == null || apiKey.isBlank()) {
-            loadKeySettingsScene();
+            showScene(SCENE_SETTINGS);
         } else {
-            // TODO Rename method
-            load(apiKey);
+            proceedMainThread(apiKey);
         }
     }
 
-    public void load(String apiKey) {
-        logger.log(System.Logger.Level.INFO, "Load loading scene");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/scene/loading-scene.fxml"));
-        Pane loadingScene;
-        try {
-            loadingScene = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void proceedMainThread(String apiKey) {
+        showScene(SCENE_LOADING);
 
         infoBlock.setVisible(false);
         showLaunchesCounter();
-        rootContainer.setCenter(loadingScene);
 
         new Thread(() -> {
             HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
             if (httpResponse != null && httpResponse.statusCode() == 200) {
-                Picture picture = httpResponseHandlerService.parseHttpResponseToPicture(httpResponse);
-                if (!imageSaver.savePictureToFolder(picture)) {
-                    Platform.runLater(() -> {
-                        showPictureSaveAlert();
-                        loadKeySettingsScene();
-                    });
-                } else {
-                    WallpaperChanger.setScreenImage(picture);
-                    Platform.runLater(() -> {
-                        loadPictureDescriptionScene(picture);
-                        updateAndShowLaunchesCounter();
-                        infoBlock.setVisible(true);
-                    });
-                }
+                Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
+                saveAndShowPicture(picture);
             } else {
-                Platform.runLater(() -> {
-                    String errorMessage;
-                    if (httpResponse == null) {
-                        errorMessage = "Connection problem. \nPlease, try later.";
-                    } else {
-                        errorMessage = null;
-                    }
-                    showHttpRequestAlert(errorMessage);
-                    loadKeySettingsScene();
-                });
+                showAlertAndCloseApp(httpResponse);
             }
         }).start();
+    }
+
+    private Pane loadScene(String sceneName) {
+        logger.log(System.Logger.Level.INFO, "Start loading scene: {0}", sceneName);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApplication.class.getResource(sceneName));
+        try {
+            return loader.load();
+        } catch (IOException e) {
+            // TODO what to do?
+//            showAlertAndCloseApp();
+            throw new RuntimeException();
+        }
+    }
+
+
+    // TODO to reproduce and look
+    private void showAlertAndCloseApp(HttpResponse<String> httpResponse) {
+        Platform.runLater(() -> {
+            String errorMessage;
+            if (httpResponse == null) {
+                errorMessage = "Connection problem. \nPlease, try later.";
+            } else {
+                errorMessage = null;
+            }
+            showErrorAlert(errorMessage);
+            showScene(SCENE_SETTINGS);
+
+            // TODO Add App auto closing
+        });
+    }
+
+    private void saveAndShowPicture(Picture picture) {
+        if (!pictureSaver.savePictureToFolder(picture)) {
+            Platform.runLater(() -> {
+                showErrorAlert(String.format("Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
+                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
+                showScene(SCENE_SETTINGS);
+            });
+        } else {
+            WallpaperChanger.setScreenImage(picture);
+            Platform.runLater(() -> {
+                showPictureDescriptionScene(picture);
+                updateAndShowLaunchesCounter();
+                infoBlock.setVisible(true);
+            });
+        }
     }
 
     private void updateAndShowLaunchesCounter() {
@@ -133,28 +153,23 @@ public class MainController {
         numberOfRocketLaunches.setText(String.format("Rocket launches: %s", numberOfLaunches));
     }
 
-    public void loadKeySettingsScene() {
-        try {
-            logger.log(System.Logger.Level.INFO, "Load key input scene");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/scene/settings-scene.fxml"));
-            Pane container = loader.load();
+    public void showScene(String sceneName) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneName));
+        Pane container = loadScene(sceneName);
 
-            SettingsController settingsController = loader.getController();
-            settingsController.setRootController(this);
-            settingsController.setRootStage(primaryStage);
+//        SettingsController settingsController = loader.getController();
+//        settingsController.setRootController(this);
+//        settingsController.setRootStage(primaryStage);
 
-            rootContainer.setCenter(container);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mainPane.setCenter(container);
     }
 
     @FXML
-    public void loadKeyInputSceneFXML(Event event) {
-        loadKeySettingsScene();
+    public void showSettingsScene() {
+        showScene(SCENE_SETTINGS);
     }
 
-    public void loadPictureDescriptionScene(Picture picture) {
+    public void showPictureDescriptionScene(Picture picture) {
         try {
             logger.log(System.Logger.Level.INFO, "Load picture description scene");
             FXMLLoader loader = new FXMLLoader();
@@ -163,9 +178,9 @@ public class MainController {
 
             PictureDescriptionController pictureDescriptionController = loader.getController();
             pictureDescriptionController.showPictureDescription(picture);
-            pictureDescriptionController.setPrimaryContainer(rootContainer);
+            pictureDescriptionController.setPrimaryContainer(mainPane);
 
-            rootContainer.setCenter(vboxContainer);
+            mainPane.setCenter(vboxContainer);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -173,63 +188,32 @@ public class MainController {
 
     @FXML
     private void showAboutAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("About Astronomy picture of the day");
+        Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
 
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(logo);
-
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource("/scene/about.fxml"));
-        Pane aboutScene = null;
-        try {
-            aboutScene = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Pane aboutScene = loadScene(SCENE_ABOUT);
 
         alert.getDialogPane().setContent(aboutScene);
-
         alert.showAndWait();
     }
 
-    private void showPictureSaveAlert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = createAlert(Alert.AlertType.ERROR, "Error");
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.setTitle("Error");
-
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(logo);
 
         alert.setHeaderText("Error during image loading");
-        alert.setGraphic(null);
-
-        alert.getDialogPane().setContentText(
-                String.format("Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
-                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
-
-        alert.show();
-    }
-
-    private void showHttpRequestAlert(String errorMessage) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-        alert.setTitle("Error");
-
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(logo);
-
-        alert.setHeaderText("Error during image loading");
-        alert.setGraphic(null);
 
         alert.getDialogPane().setContentText(errorMessage);
-
         alert.showAndWait();
+    }
+
+    private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertTitle);
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(logo);
+
+        return alert;
     }
 }

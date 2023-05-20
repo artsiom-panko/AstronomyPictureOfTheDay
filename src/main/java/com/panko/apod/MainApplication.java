@@ -19,6 +19,8 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        // TODO get rid of manual loader
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/scene/root-scene.fxml"));
         Parent root = loader.load();
 

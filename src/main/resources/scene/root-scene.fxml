@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="rootContainer" maxHeight="400.0" maxWidth="500.0" prefHeight="380.0" prefWidth="470.0"
+<BorderPane fx:id="mainPane" maxHeight="400.0" maxWidth="500.0" prefHeight="380.0" prefWidth="470.0"
             xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.panko.apod.controller.MainController">
     <bottom>
@@ -24,7 +24,7 @@
                 </opaqueInsets>
             </HBox>
             <HBox fx:id="infoBlock" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="477.0">
-                <Button mnemonicParsing="false" onAction="#loadKeyInputSceneFXML" opacity="0.5"
+                <Button mnemonicParsing="false" onAction="#showSettingsScene" opacity="0.5"
                         style="-fx-background-color: transparent;" text="Settings">
                     <cursor>
                         <Cursor fx:constant="HAND"/>

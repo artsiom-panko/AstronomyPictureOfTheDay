@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
 
-public class HttpResponseHandlerService {
-    private static final System.Logger logger = System.getLogger(HttpResponseHandlerService.class.getName());
+public class HttpResponseParsingService {
+    private static final System.Logger logger = System.getLogger(HttpResponseParsingService.class.getName());
 
     public Picture parseHttpResponseToPicture(HttpResponse<String> response) {
         Picture picture = new Picture();
