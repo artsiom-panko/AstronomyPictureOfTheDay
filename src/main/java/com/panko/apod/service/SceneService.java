@@ -20,25 +20,19 @@ public class SceneService {
     public static final String SCENE_SETTINGS = "/scene/settings-scene.fxml";
     public static final String SCENE_DESCRIPTION = "/scene/picture-description-scene.fxml";
 
-    private Stage mainStage;
     private static final System.Logger logger = System.getLogger(SceneService.class.getName());
 
-//    public SceneService(Stage mainStage) {
-//        this.mainStage = mainStage;
-//    }
-
-    public void startMainScene(Stage primaryStage) throws IOException {
+    public void makeInitialSetupAndLaunch(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(SCENE_ROOT));
-        Parent rootScene = loader.load();
-
-        mainStage = primaryStage;
-        mainStage.setTitle("Astronomy picture of the day");
-        mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png"))));
-        mainStage.setScene(new Scene(rootScene));
-        mainStage.show();
+        Parent root = loadScene(SCENE_ROOT);
 
         MainController mainController = loader.getController();
-        mainController.launchMainThread();
+        mainController.setStage(primaryStage);
+
+        primaryStage.setTitle("Astronomy picture of the day");
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png"))));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
     }
 
     public void showScene(String sceneName) {
