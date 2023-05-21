@@ -2,6 +2,7 @@ package com.panko.apod.controller;
 
 import com.panko.apod.MainApplication;
 import com.panko.apod.entity.Picture;
+import com.panko.apod.service.AlertService;
 import com.panko.apod.service.ApiService;
 import com.panko.apod.service.HttpResponseParsingService;
 import com.panko.apod.util.PictureSaver;
@@ -41,6 +42,7 @@ public class MainController {
 
     private final PictureSaver pictureSaver = new PictureSaver();
 
+    private final AlertService alertService = new AlertService();
     private final ApiService apiService = new ApiService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseParsingService httpResponseParsingService = new HttpResponseParsingService();
@@ -48,7 +50,7 @@ public class MainController {
     private static final String SCENE_ABOUT = "/scene/about.fxml";
     private static final String SCENE_LOADING = "/scene/loading-scene.fxml";
     private static final String SCENE_SETTINGS = "/scene/settings-scene.fxml";
-    private static final String SCENE_DESCRIPTION =  "/scene/picture-description-scene.fxml";
+    private static final String SCENE_DESCRIPTION = "/scene/picture-description-scene.fxml";
 
     private static final System.Logger logger = System.getLogger(MainController.class.getName());
 
@@ -107,7 +109,7 @@ public class MainController {
             } else {
                 errorMessage = null;
             }
-            showErrorAlert(errorMessage);
+            alertService.showErrorAlert(errorMessage);
             showScene(SCENE_SETTINGS);
 
             // TODO Add App auto closing
@@ -117,8 +119,10 @@ public class MainController {
     private void saveAndShowPicture(Picture picture) {
         if (!pictureSaver.savePictureToFolder(picture)) {
             Platform.runLater(() -> {
-                showErrorAlert(String.format("Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
+                alertService.showErrorAlert(String.format(
+                        "Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
                         preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
+
                 showScene(SCENE_SETTINGS);
             });
         } else {
@@ -188,32 +192,6 @@ public class MainController {
 
     @FXML
     private void showAboutAlert() {
-        Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
-
-        Pane aboutScene = loadScene(SCENE_ABOUT);
-
-        alert.getDialogPane().setContent(aboutScene);
-        alert.showAndWait();
-    }
-
-    private void showErrorAlert(String errorMessage) {
-        Alert alert = createAlert(Alert.AlertType.ERROR, "Error");
-        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-
-        alert.setHeaderText("Error during image loading");
-
-        alert.getDialogPane().setContentText(errorMessage);
-        alert.showAndWait();
-    }
-
-    private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(alertTitle);
-
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png")));
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(logo);
-
-        return alert;
+        alertService.showAboutAlert();
     }
 }
