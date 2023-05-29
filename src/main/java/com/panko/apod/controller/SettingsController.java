@@ -1,5 +1,7 @@
 package com.panko.apod.controller;
 
+import com.panko.apod.entity.SceneController;
+import com.panko.apod.service.SceneService;
 import com.panko.apod.util.PreferencesManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ import java.util.ResourceBundle;
 
 import static com.panko.apod.util.PreferencesManager.*;
 
-public class SettingsController implements Initializable {
+public class SettingsController implements Initializable, SceneController {
 
     @FXML
     private TextField newApiKey;
@@ -29,17 +31,9 @@ public class SettingsController implements Initializable {
     private ToggleGroup languageGroup;
 
     private Stage primaryStage;
-    private MainController mainController;
+    private SceneService sceneService;
 
     private final PreferencesManager preferencesManager = new PreferencesManager();
-
-    public void setRootController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    public void setRootStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,6 +58,11 @@ public class SettingsController implements Initializable {
         preferencesManager.saveKey(PICTURES_FOLDER, folderWithPicturesPath);
 //        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
-        mainController.launchMainThread();
+        sceneService.launchMainThread();
+    }
+
+    @Override
+    public void setSceneService(SceneService sceneService) {
+        this.sceneService = sceneService;
     }
 }

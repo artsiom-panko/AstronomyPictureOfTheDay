@@ -2,6 +2,8 @@ package com.panko.apod.controller;
 
 import com.panko.apod.MainApplication;
 import com.panko.apod.entity.Picture;
+import com.panko.apod.entity.SceneController;
+import com.panko.apod.service.SceneService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextArea;
@@ -11,21 +13,20 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class PictureDescriptionController {
+public class PictureDescriptionController implements SceneController {
 
     @FXML
     private Text pictureTitle;
     @FXML
     private TextArea pictureDescription;
 
+    private SceneService sceneService;
+
     private BorderPane primaryContainer;
 
     public void setPrimaryContainer(BorderPane container) {
         this.primaryContainer = container;
     }
-
-    public static final String PICTURE_DESCRIPTION_SCENE_PATH =
-            "/scene/picture-description-scene.fxml";
 
     public void showPictureDescription(Picture picture) {
         pictureTitle.setText(picture.getTitle());
@@ -47,5 +48,10 @@ public class PictureDescriptionController {
 
     private String generateCopyrightText(Picture picture) {
         return String.format("Copyright © %d by %s", picture.getDate().getYear(), picture.getCopyright());
+    }
+
+    @Override
+    public void setSceneService(SceneService sceneService) {
+        this.sceneService = sceneService;
     }
 }

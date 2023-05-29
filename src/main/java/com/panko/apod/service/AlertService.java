@@ -17,7 +17,8 @@ public class AlertService {
     public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
 
-        Pane aboutScene = sceneService.loadScene(SCENE_ABOUT);
+//        Pane aboutScene = sceneService.loadScene(SCENE_ABOUT);
+        Pane aboutScene = null;
 
         alert.getDialogPane().setContent(aboutScene);
         alert.showAndWait();
