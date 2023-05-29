@@ -2,11 +2,14 @@ package com.panko.apod.service;
 
 import com.panko.apod.MainApplication;
 import com.panko.apod.controller.MainController;
+import com.panko.apod.controller.PictureDescriptionController;
+import com.panko.apod.entity.Picture;
 import com.panko.apod.entity.SceneController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,15 +28,6 @@ public class SceneService {
     private MainController mainController;
 
     public void makeInitialSetupAndLaunch(Stage primaryStage) {
-//        AppScene appScene = getAppScene(ROOT);
-//
-//        mainPane = (BorderPane) appScene.getPane();
-//        MainController mainController = (MainController) appScene.getController();
-//
-////        mainController.setStage(primaryStage);
-//        mainController.setSceneService(this);
-
-        //
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainApplication.class.getResource(SCENE_ROOT));
         try {
@@ -43,7 +37,6 @@ public class SceneService {
         }
         mainController = loader.getController();
         mainController.setSceneService(this);
-        //
 
         primaryStage.setTitle("Astronomy picture of the day");
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(SceneService.class.getResourceAsStream("/img/logo.png"))));
@@ -55,6 +48,18 @@ public class SceneService {
 
     public void launchMainThread() {
         mainController.launchMainThread();
+    }
+
+    public SceneController getSceneController(String scenePath) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApplication.class.getResource(scenePath));
+
+        try {
+            loader.load();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
     public void showScene(String scenePath) {
@@ -75,5 +80,20 @@ public class SceneService {
         }
 
         mainPane.setCenter(vBox);
+    }
+
+    public void showPictureDescriptionScene(Picture picture) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource(SceneService.SCENE_DESCRIPTION));
+            Pane vboxContainer = loader.load();
+
+            PictureDescriptionController pictureDescriptionController = loader.getController();
+            pictureDescriptionController.showPictureDescription(picture);
+
+            mainPane.setCenter(vboxContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

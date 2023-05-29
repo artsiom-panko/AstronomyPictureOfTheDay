@@ -1,6 +1,5 @@
 package com.panko.apod.controller;
 
-import com.panko.apod.MainApplication;
 import com.panko.apod.entity.Picture;
 import com.panko.apod.entity.SceneController;
 import com.panko.apod.service.AlertService;
@@ -12,13 +11,9 @@ import com.panko.apod.util.PreferencesManager;
 import com.panko.apod.util.WallpaperChanger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
@@ -29,8 +24,6 @@ public class MainController implements SceneController {
 
     @FXML
     private HBox infoBlock;
-    @FXML
-    private BorderPane mainPane;
     @FXML
     private Text numberOfRocketLaunches;
 
@@ -102,7 +95,8 @@ public class MainController implements SceneController {
         } else {
             WallpaperChanger.setScreenImage(picture);
             Platform.runLater(() -> {
-                sceneService.showScene(SceneService.SCENE_DESCRIPTION);
+                sceneService.showPictureDescriptionScene(picture);
+
                 updateAndShowLaunchesCounter();
                 infoBlock.setVisible(true);
             });
@@ -134,23 +128,6 @@ public class MainController implements SceneController {
     @FXML
     public void showSettingsScene() {
         sceneService.showScene(SceneService.SCENE_SETTINGS);
-    }
-
-    public void showPictureDescriptionScene(Picture picture) {
-        try {
-            logger.log(System.Logger.Level.INFO, "Load picture description scene");
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource(SceneService.SCENE_DESCRIPTION));
-            Pane vboxContainer = loader.load();
-
-            PictureDescriptionController pictureDescriptionController = loader.getController();
-            pictureDescriptionController.showPictureDescription(picture);
-            pictureDescriptionController.setPrimaryContainer(mainPane);
-
-            mainPane.setCenter(vboxContainer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
