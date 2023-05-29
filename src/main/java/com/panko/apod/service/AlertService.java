@@ -1,5 +1,6 @@
 package com.panko.apod.service;
 
+import com.panko.apod.entity.AppScene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -8,18 +9,17 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-import static com.panko.apod.service.SceneService.SCENE_ABOUT;
-
 public class AlertService {
 
-    private final SceneService sceneService = new SceneService();
+    private final SceneService2 sceneService2 = new SceneService2();
 
+    // TODO Remove 'Message' text from the alert
     public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
 
-        Pane aboutScene = sceneService.loadScene(SCENE_ABOUT);
+        AppScene appScene = sceneService2.getAppScene(null);
 
-        alert.getDialogPane().setContent(aboutScene);
+        alert.getDialogPane().setContent(appScene.getPane());
         alert.showAndWait();
     }
 

@@ -1,8 +1,15 @@
 package com.panko.apod.controller;
 
+import com.panko.apod.MainApplication;
+import com.panko.apod.entity.AppScene;
+import com.panko.apod.entity.Controller;
+import com.panko.apod.entity.ControllerInterface;
+import com.panko.apod.service.SceneService;
+import com.panko.apod.service.SceneService2;
 import com.panko.apod.util.PreferencesManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
@@ -19,27 +26,23 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
 
-import static com.panko.apod.util.PreferencesManager.*;
+import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
+import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
-public class SettingsController implements Initializable {
+public class SettingsController extends Controller implements Initializable, ControllerInterface {
 
     @FXML
     private TextField newApiKey;
     @FXML
     private ToggleGroup languageGroup;
 
-    private Stage primaryStage;
-    private MainController mainController;
+    private SceneService2 sceneService2;
+
+    public void setSceneService2(SceneService2 sceneService2) {
+        this.sceneService2 = sceneService2;
+    }
 
     private final PreferencesManager preferencesManager = new PreferencesManager();
-
-    public void setRootController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    public void setRootStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,6 +67,6 @@ public class SettingsController implements Initializable {
         preferencesManager.saveKey(PICTURES_FOLDER, folderWithPicturesPath);
 //        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
-        mainController.launchMainThread();
+        sceneService2.launchMainThread();
     }
 }

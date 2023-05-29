@@ -2,61 +2,90 @@ package com.panko.apod.service;
 
 import com.panko.apod.MainApplication;
 import com.panko.apod.controller.MainController;
+import com.panko.apod.entity.AppScene;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.*;
+
+import static com.panko.apod.entity.AppScene.ROOT;
 
 public class SceneService {
+    private BorderPane mainPane;
+    private MainController mainController;
 
-    public static final String SCENE_ROOT = "/scene/root-scene.fxml";
-    public static final String SCENE_ABOUT = "/scene/about.fxml";
-    public static final String SCENE_LOADING = "/scene/loading-scene.fxml";
-    public static final String SCENE_SETTINGS = "/scene/settings-scene.fxml";
-    public static final String SCENE_DESCRIPTION = "/scene/picture-description-scene.fxml";
-
-    private static final System.Logger logger = System.getLogger(SceneService.class.getName());
-
-    public void makeInitialSetupAndLaunch(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(SCENE_ROOT));
-        Parent root = loadScene(SCENE_ROOT);
-
-        MainController mainController = loader.getController();
-        mainController.setStage(primaryStage);
-
-        primaryStage.setTitle("Astronomy picture of the day");
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/logo.png"))));
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-    }
-
-    public void showScene(String sceneName) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneName));
-        Pane container = loadScene(sceneName);
-
-//        SettingsController settingsController = loader.getController();
-//        settingsController.setRootController(this);
-//        settingsController.setRootStage(primaryStage);
-
-//        mainPane.setCenter(container);
-    }
-
-    public Pane loadScene(String sceneName) {
-        logger.log(System.Logger.Level.INFO, "Start loading scene: {0}", sceneName);
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource(sceneName));
-        try {
-            return loader.load();
-        } catch (IOException e) {
-            // TODO what to do?
-//            showAlertAndCloseApp();
-            throw new RuntimeException();
-        }
-    }
+//    private static final System.Logger logger = System.getLogger(SceneService.class.getName());
+//
+//    Map<String, AppScene> loadedAppSciencesMap = new HashMap<>();
+//    private final List<AppScene> loadedAppSciences = new ArrayList<>();
+//
+//    public void makeInitialSetupAndLaunch(Stage primaryStage) {
+////        AppScene appScene = getAppScene(ROOT);
+////
+////        mainPane = (BorderPane) appScene.getPane();
+////        MainController mainController = (MainController) appScene.getController();
+////
+//////        mainController.setStage(primaryStage);
+////        mainController.setSceneService(this);
+//
+//        //
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(MainApplication.class.getResource(AppScene.ROOT.getPath()));
+//        try {
+//            mainPane = loader.load();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        mainController = loader.getController();
+//        mainController.setSceneService(this);
+//        //
+//
+//        primaryStage.setTitle("Astronomy picture of the day");
+//        primaryStage.getIcons().add(new Image(Objects.requireNonNull(SceneService.class.getResourceAsStream("/img/logo.png"))));
+//        primaryStage.setScene(new Scene(mainPane));
+//        primaryStage.show();
+//
+//        launchMainThread();
+//    }
+//
+//    public void launchMainThread() {
+//        mainController.launchMainThread();
+//    }
+//
+//    public void showScene(AppScene appScene) {
+//        AppScene loadedAppScene = getAppScene(appScene);
+//
+//        mainPane.setCenter(loadedAppScene.getPane());
+//    }
+//
+//    public AppScene getAppScene(AppScene appScene) {
+//        logger.log(System.Logger.Level.INFO, "Start loading scene: {0}", appScene.name());
+//
+//        if (loadedAppSciencesMap.containsKey(appScene.name())) {
+//            return loadedAppSciencesMap.get(appScene.name());
+//        } else {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(MainApplication.class.getResource(appScene.getPath()));
+//
+//            try {
+//                appScene.setPane(loader.load());
+////                appScene.setController(loader.getController());
+//                appScene.setSceneService(this);
+//
+//            } catch (IOException e) {
+//                // TODO what to do?
+//                // showAlertAndCloseApp();
+//                throw new RuntimeException();
+//            }
+//
+//            loadedAppSciencesMap.put(appScene.name(), appScene);
+//
+//            return appScene;
+//        }
+//    }
 }
