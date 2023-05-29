@@ -52,10 +52,10 @@ public class SettingsController implements Initializable, SceneController {
     @FXML
     private void saveNewApiKey() {
         Path applicationAbsolutePath = FileSystems.getDefault().getPath("").toAbsolutePath();
-        String folderWithPicturesPath = applicationAbsolutePath.toString().concat("\\pictures.jpg\\");
+        String picturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
 
+        preferencesManager.saveKey(PICTURES_FOLDER, picturesPath);
         preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());
-        preferencesManager.saveKey(PICTURES_FOLDER, folderWithPicturesPath);
 //        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
         sceneService.launchMainThread();
