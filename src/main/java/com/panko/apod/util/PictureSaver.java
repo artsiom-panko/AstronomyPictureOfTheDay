@@ -15,6 +15,7 @@ public class PictureSaver {
 
     private static final System.Logger logger = System.getLogger(PictureSaver.class.getName());
 
+    // TODO add exception handler for this one
     public boolean savePictureToFolder(Picture picture) {
         try {
             BufferedImage image = ImageIO.read(new URL(picture.getImgUrl()));
@@ -22,7 +23,6 @@ public class PictureSaver {
             String[] splitUrl = picture.getImgUrl().split("/");
             String fileName = splitUrl[splitUrl.length - 1];
             String absolutePath = preferencesManager.readKey(PICTURES_FOLDER)
-                    .concat("\\")
                     .concat(fileName);
             picture.setLocalPath(absolutePath);
 

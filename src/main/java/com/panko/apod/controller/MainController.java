@@ -38,7 +38,6 @@ public class MainController implements SceneController {
 
     private static final System.Logger logger = System.getLogger(MainController.class.getName());
 
-
     public void launchMainThread() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
@@ -59,34 +58,26 @@ public class MainController implements SceneController {
             HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
             if (httpResponse != null && httpResponse.statusCode() == 200) {
                 Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
-                saveAndShowPicture(picture);
+
+                pictureSaver.savePictureToFolder(picture);
+
+                WallpaperChanger.setScreenImage(picture);
+                Platform.runLater(() -> {
+                    sceneService.showPictureDescriptionScene(picture);
+
+                    updateAndShowLaunchesCounter();
+                    infoBlock.setVisible(true);
+                });
             } else {
-                showAlertAndCloseApp(httpResponse);
+                alertService.showErrorAlertAndCloseApp("Connection problem. \nPlease, try later.");
             }
         }).start();
-    }
-
-
-    // TODO to reproduce and look
-    private void showAlertAndCloseApp(HttpResponse<String> httpResponse) {
-        Platform.runLater(() -> {
-            String errorMessage;
-            if (httpResponse == null) {
-                errorMessage = "Connection problem. \nPlease, try later.";
-            } else {
-                errorMessage = null;
-            }
-            alertService.showErrorAlert(errorMessage);
-            sceneService.showScene(SceneService.SCENE_SETTINGS);
-
-            // TODO Add App auto closing
-        });
     }
 
     private void saveAndShowPicture(Picture picture) {
         if (!pictureSaver.savePictureToFolder(picture)) {
             Platform.runLater(() -> {
-                alertService.showErrorAlert(String.format(
+                alertService.showErrorAlertAndCloseApp(String.format(
                         "Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
                         preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
 
