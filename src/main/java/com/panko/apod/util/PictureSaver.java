@@ -1,6 +1,7 @@
 package com.panko.apod.util;
 
 import com.panko.apod.entity.Picture;
+import com.panko.apod.service.AlertService;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -11,12 +12,12 @@ import java.net.URL;
 import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
 public class PictureSaver {
+    private final AlertService alertService = new AlertService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
 
     private static final System.Logger logger = System.getLogger(PictureSaver.class.getName());
 
-    // TODO add exception handler for this one
-    public boolean savePictureToFolder(Picture picture) {
+    public void savePictureToFolder(Picture picture) {
         try {
             BufferedImage image = ImageIO.read(new URL(picture.getImgUrl()));
 
@@ -32,11 +33,9 @@ public class PictureSaver {
             ImageIO.write(image, "jpg", fileFir);
 
             logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", absolutePath);
-        } catch (IOException e) {
-            logger.log(System.Logger.Level.ERROR, "Error during Image saving: {0}", e.getMessage());
-            return false;
+        } catch (IOException exception) {
+            logger.log(System.Logger.Level.ERROR, "Error during Image saving: {0}", exception.getMessage());
+            alertService.showErrorAlertAndCloseApp("Error during Image saving", exception);
         }
-
-        return true;
     }
 }

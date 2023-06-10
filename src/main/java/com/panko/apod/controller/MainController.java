@@ -55,8 +55,9 @@ public class MainController implements SceneController {
         showLaunchesCounter();
 
         new Thread(() -> {
-            HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-            if (httpResponse != null && httpResponse.statusCode() == 200) {
+            try {
+                HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
+
                 Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
 
                 pictureSaver.savePictureToFolder(picture);
@@ -68,31 +69,32 @@ public class MainController implements SceneController {
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
                 });
-            } else {
-                alertService.showErrorAlertAndCloseApp("Connection problem. \nPlease, try later.");
+
+            } catch (Exception exception) {
+                alertService.showErrorAlertAndCloseApp("Connection problem. \nPlease, try later.", exception);
             }
         }).start();
     }
 
-    private void saveAndShowPicture(Picture picture) {
-        if (!pictureSaver.savePictureToFolder(picture)) {
-            Platform.runLater(() -> {
-                alertService.showErrorAlertAndCloseApp(String.format(
-                        "Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
-                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
-
-                sceneService.showScene(SceneService.SCENE_SETTINGS);
-            });
-        } else {
-            WallpaperChanger.setScreenImage(picture);
-            Platform.runLater(() -> {
-                sceneService.showPictureDescriptionScene(picture);
-
-                updateAndShowLaunchesCounter();
-                infoBlock.setVisible(true);
-            });
-        }
-    }
+//    private void saveAndShowPicture(Picture picture) {
+//        if (!pictureSaver.savePictureToFolder(picture)) {
+//            Platform.runLater(() -> {
+//                alertService.showErrorAlertAndCloseApp(String.format(
+//                        "Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
+//                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
+//
+//                sceneService.showScene(SceneService.SCENE_SETTINGS);
+//            });
+//        } else {
+//            WallpaperChanger.setScreenImage(picture);
+//            Platform.runLater(() -> {
+//                sceneService.showPictureDescriptionScene(picture);
+//
+//                updateAndShowLaunchesCounter();
+//                infoBlock.setVisible(true);
+//            });
+//        }
+//    }
 
     private void updateAndShowLaunchesCounter() {
         String numberOfLaunches = Optional

@@ -1,12 +1,15 @@
 package com.panko.apod.service;
 
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Objects;
 
 public class AlertService {
@@ -21,14 +24,27 @@ public class AlertService {
         alert.showAndWait();
     }
 
-    public void showErrorAlertAndCloseApp(String errorMessage) {
+    public void showErrorAlertAndCloseApp(String errorMessage, Exception exception) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.ERROR, "Error");
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
-            alert.setHeaderText("Critical error");
+            alert.setHeaderText(errorMessage);
 
-            alert.getDialogPane().setContentText(errorMessage);
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            exception.printStackTrace(printWriter);
+
+            TextArea textArea = new TextArea(stringWriter.toString());
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(textArea, 0, 0);
+
+            alert.getDialogPane().setExpandableContent(expContent);
+
             alert.showAndWait();
             Platform.exit();
         });
