@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+// TODO refactor this class, should be min number of .load calls
 public class SceneService {
 
     public static final String SCENE_ABOUT = "/scene/about.fxml";

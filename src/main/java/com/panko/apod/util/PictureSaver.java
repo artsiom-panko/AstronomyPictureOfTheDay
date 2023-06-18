@@ -34,6 +34,7 @@ public class PictureSaver {
 
             logger.log(System.Logger.Level.INFO, "Image was successfully saved to: {0}", absolutePath);
         } catch (IOException exception) {
+            // TODO think about keeping try-catch block inside each Class or moving to MainController
             logger.log(System.Logger.Level.ERROR, "Error during Image saving: {0}", exception.getMessage());
             alertService.showErrorAlertAndCloseApp("Error during Image saving", exception);
         }

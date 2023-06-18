@@ -28,12 +28,11 @@ public class MainController implements SceneController {
     @FXML
     private Text numberOfRocketLaunches;
 
-    private final PictureSaver pictureSaver = new PictureSaver();
-
     private SceneService sceneService;
 
-    private final AlertService alertService = new AlertService();
     private final ApiService apiService = new ApiService();
+    private final PictureSaver pictureSaver = new PictureSaver();
+    private final AlertService alertService = new AlertService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseParsingService httpResponseParsingService = new HttpResponseParsingService();
 
