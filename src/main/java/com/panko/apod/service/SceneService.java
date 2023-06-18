@@ -27,6 +27,10 @@ public class SceneService {
     private BorderPane mainPane;
     private MainController mainController;
 
+    public void launchMainThread() {
+        mainController.launchMainThread();
+    }
+
     public void makeInitialSetupAndLaunch(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(MainApplication.class.getResource(SCENE_ROOT));
@@ -46,8 +50,15 @@ public class SceneService {
         launchMainThread();
     }
 
-    public void launchMainThread() {
-        mainController.launchMainThread();
+    public Pane getScenePane(String scenePath) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApplication.class.getResource(scenePath));
+
+        try {
+            return loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
     public SceneController getSceneController(String scenePath) {
@@ -82,6 +93,7 @@ public class SceneService {
         mainPane.setCenter(vBox);
     }
 
+    // TODO get rid of this
     public void showPictureDescriptionScene(Picture picture) {
         try {
             FXMLLoader loader = new FXMLLoader();

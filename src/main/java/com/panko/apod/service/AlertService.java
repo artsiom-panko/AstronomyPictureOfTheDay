@@ -12,13 +12,15 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Objects;
 
+import static com.panko.apod.service.SceneService.SCENE_ABOUT;
+
 public class AlertService {
+    private final SceneService sceneService = new SceneService();
 
     public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
 
-//        Pane aboutScene = sceneService.loadScene(SCENE_ABOUT);
-        Pane aboutScene = null;
+        Pane aboutScene = sceneService.getScenePane(SCENE_ABOUT);
 
         alert.getDialogPane().setContent(aboutScene);
         alert.showAndWait();

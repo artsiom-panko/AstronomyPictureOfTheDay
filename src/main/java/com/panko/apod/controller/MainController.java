@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.util.Optional;
 
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
@@ -70,31 +71,15 @@ public class MainController implements SceneController {
                     infoBlock.setVisible(true);
                 });
 
+            } catch (HttpTimeoutException exception) {
+                alertService.showErrorAlertAndCloseApp(
+                        "Picture service is not available now.\nPlease, try later", exception);
             } catch (Exception exception) {
-                alertService.showErrorAlertAndCloseApp("Connection problem. \nPlease, try later.", exception);
+                alertService.showErrorAlertAndCloseApp(
+                        "Unknown error", exception);
             }
         }).start();
     }
-
-//    private void saveAndShowPicture(Picture picture) {
-//        if (!pictureSaver.savePictureToFolder(picture)) {
-//            Platform.runLater(() -> {
-//                alertService.showErrorAlertAndCloseApp(String.format(
-//                        "Error during saving image to selected folder: %s %nPlease, select another folder and try again.",
-//                        preferencesManager.readKey(PreferencesManager.PICTURES_FOLDER)));
-//
-//                sceneService.showScene(SceneService.SCENE_SETTINGS);
-//            });
-//        } else {
-//            WallpaperChanger.setScreenImage(picture);
-//            Platform.runLater(() -> {
-//                sceneService.showPictureDescriptionScene(picture);
-//
-//                updateAndShowLaunchesCounter();
-//                infoBlock.setVisible(true);
-//            });
-//        }
-//    }
 
     private void updateAndShowLaunchesCounter() {
         String numberOfLaunches = Optional
