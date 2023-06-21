@@ -52,7 +52,7 @@
         </Text>
         <TextField fx:id="newApiKey" promptText="API key" />
     </VBox>
-    <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveNewApiKey" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #5E92F9;" text="Accept" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+    <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveSettings" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #5E92F9;" text="Accept" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
         <font>
             <Font name="System Bold" size="13.0" />
         </font>

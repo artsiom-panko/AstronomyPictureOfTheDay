@@ -26,6 +26,18 @@ public class AlertService {
         alert.showAndWait();
     }
 
+    public void showWarningAlert(String alertHeader, String alertMessage) {
+        Platform.runLater(() -> {
+            Alert alert = createAlert(Alert.AlertType.WARNING, "Warning");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+            alert.setHeaderText(alertHeader);
+            alert.setContentText(alertMessage);
+
+            alert.showAndWait();
+        });
+    }
+
     public void showErrorAlertAndCloseApp(String errorMessage, Exception exception) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.ERROR, "Error");

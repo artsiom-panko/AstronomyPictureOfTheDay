@@ -15,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.net.http.HttpResponse;
-import java.net.http.HttpTimeoutException;
 import java.util.Optional;
 
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
@@ -50,14 +49,12 @@ public class MainController implements SceneController {
 
     public void proceedMainThread(String apiKey) {
         sceneService.showScene(SceneService.SCENE_LOADING);
-
         infoBlock.setVisible(false);
         showLaunchesCounter();
 
         new Thread(() -> {
             try {
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-
                 Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
 
                 pictureSaver.savePictureToFolder(picture);
@@ -65,14 +62,10 @@ public class MainController implements SceneController {
                 WallpaperChanger.setScreenImage(picture);
                 Platform.runLater(() -> {
                     sceneService.showPictureDescriptionScene(picture);
-
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
                 });
 
-            } catch (HttpTimeoutException exception) {
-                alertService.showErrorAlertAndCloseApp(
-                        "Picture service is not available now.\nPlease, try later", exception);
             } catch (Exception exception) {
                 alertService.showErrorAlertAndCloseApp(
                         "Unknown error", exception);
@@ -80,6 +73,7 @@ public class MainController implements SceneController {
         }).start();
     }
 
+    // TODO Split to two separate methods
     private void updateAndShowLaunchesCounter() {
         String numberOfLaunches = Optional
                 .ofNullable(preferencesManager.readKey(NUMBER_OF_ROCKET_LAUNCHES))

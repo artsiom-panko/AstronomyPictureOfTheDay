@@ -45,9 +45,11 @@ mvn clean package jpackage:jpackage
 
 
 ## TO-DO plans
-- ☑ To add Error handling
-- ☐ To add API key verification after input
+- ☑ Add Error handling and displaying
+- ☑ Add API key verification after input
 - ☐ Fix all the Critical sonarlint issues
-- ☐ To add update checker
-- ☐ (optional) To add number of launches
-- ☐ (optional) Multi languages support
+- ☐ Add saving logs to folder
+- ☐ Add update checker
+- ☐ (optional) Add number of launches
+- ☐ (optional) Add multi languages support
+- ☐ (optional) Get rid of App installer and switch to executable file (download and use)

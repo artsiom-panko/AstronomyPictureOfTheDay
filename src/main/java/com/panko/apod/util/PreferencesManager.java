@@ -21,4 +21,9 @@ public class PreferencesManager {
         logger.log(System.Logger.Level.INFO, String.format("Save property, key: %s, value: %s ", key, value));
         preferences.put(key, value);
     }
+
+    public void removeKey(String key) {
+        logger.log(System.Logger.Level.INFO, "Remove property by key: " + key);
+        preferences.remove(key);
+    }
 }
