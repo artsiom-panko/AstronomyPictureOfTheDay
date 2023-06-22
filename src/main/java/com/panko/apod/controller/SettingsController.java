@@ -11,8 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -29,11 +27,10 @@ import static com.panko.apod.util.PreferencesManager.*;
 public class SettingsController implements Initializable, SceneController {
 
     @FXML
-    private TextField newApiKey;
+    private TextField apiKeyField;
     @FXML
     private ToggleGroup languageGroup;
 
-    private Stage primaryStage;
     private SceneService sceneService;
 
     private final PreferencesManager preferencesManager = new PreferencesManager();
@@ -43,7 +40,7 @@ public class SettingsController implements Initializable, SceneController {
         String key = preferencesManager.readKey(NASA_API_KEY);
 
         if (key != null && !key.isEmpty()) {
-            newApiKey.setText(key);
+            apiKeyField.setText(key);
         }
     }
 
@@ -56,11 +53,10 @@ public class SettingsController implements Initializable, SceneController {
     private void saveSettings() {
         Path applicationAbsolutePath = FileSystems.getDefault().getPath("").toAbsolutePath();
         String picturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
-        String enteredApiKey = newApiKey.getText();
 
-        if (!enteredApiKey.isBlank() && isApiKeyValid(enteredApiKey)) {
+        if (isEnteredApiKeyValid(apiKeyField)) {
             preferencesManager.saveKey(PICTURES_FOLDER, picturesPath);
-            preferencesManager.saveKey(NASA_API_KEY, newApiKey.getText());
+            preferencesManager.saveKey(NASA_API_KEY, apiKeyField.getText());
 //        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
             sceneService.launchMainThread();
@@ -77,9 +73,18 @@ public class SettingsController implements Initializable, SceneController {
         this.sceneService = sceneService;
     }
 
-    private boolean isApiKeyValid(String apiKey) {
+    private boolean isEnteredApiKeyValid(TextField apiKeyToCheck) {
+        if (apiKeyToCheck == null) {
+            return false;
+        }
+
+        String enteredApiKeyValue = apiKeyToCheck.getText();
+        if (!enteredApiKeyValue.isBlank() && !preferencesManager.readKey(NASA_API_KEY).equals(enteredApiKeyValue)) {
+            return false;
+        }
+
         ApiService apiService = new ApiService();
-        HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
+        HttpResponse<String> httpResponse = apiService.sendHttpRequest(enteredApiKeyValue);
 
         return !httpResponse.body().contains("API_KEY_INVALID");
     }
