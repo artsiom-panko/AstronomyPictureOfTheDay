@@ -2,10 +2,7 @@ package com.panko.apod.controller;
 
 import com.panko.apod.entity.Picture;
 import com.panko.apod.entity.SceneController;
-import com.panko.apod.service.AlertService;
-import com.panko.apod.service.ApiService;
-import com.panko.apod.service.HttpResponseParsingService;
-import com.panko.apod.service.SceneService;
+import com.panko.apod.service.*;
 import com.panko.apod.util.PictureSaver;
 import com.panko.apod.util.PreferencesManager;
 import com.panko.apod.util.WallpaperChanger;
@@ -64,6 +61,11 @@ public class MainController implements SceneController {
                     sceneService.showPictureDescriptionScene(picture);
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
+
+                    // TODO refactor UpdateCheckService block
+                    UpdateCheckService updateCheckService = new UpdateCheckService();
+                    updateCheckService.setSceneService(sceneService);
+                    updateCheckService.ifNewVersionAvailable();
                 });
 
             } catch (Exception exception) {

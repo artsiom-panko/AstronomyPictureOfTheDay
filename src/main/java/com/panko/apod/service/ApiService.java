@@ -50,4 +50,38 @@ public class ApiService {
 
         return null;
     }
+
+    public HttpResponse<String> sendHttpGetRequest(String URI) {
+        try {
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(new URI(URI))
+                    .timeout(Duration.of(10, SECONDS))
+                    .GET()
+                    .build();
+
+            logger.log(Logger.Level.INFO, "Request: {0}",
+                    httpRequest.toString());
+
+            HttpResponse<String> httpResponse = HttpClient
+                    .newHttpClient()
+                    .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            logger.log(Logger.Level.INFO, "Response Headers: {0} \n Body: {1}",
+                    httpResponse.headers(), httpResponse.body());
+
+            return httpResponse;
+        } catch (HttpTimeoutException | URISyntaxException exception) {
+            new AlertService().showErrorAlertAndCloseApp(
+                    "Picture service is not available now.\nPlease, try later", exception);
+        } catch (IOException exception) {
+            new AlertService().showErrorAlertAndCloseApp(
+                    "Unknown IOException exception.\nPlease, try later", exception);
+        } catch (InterruptedException exception) {
+            // TODO fix that catch
+            new AlertService().showErrorAlertAndCloseApp(
+                    "Unknown InterruptedException.\nPlease, try later", exception);
+        }
+
+        return null;
+    }
 }

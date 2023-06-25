@@ -1,15 +1,21 @@
 package com.panko.apod.service;
 
 import javafx.application.Platform;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 import static com.panko.apod.service.SceneService.SCENE_ABOUT;
@@ -24,6 +30,28 @@ public class AlertService {
 
         alert.getDialogPane().setContent(aboutScene);
         alert.showAndWait();
+    }
+
+    public void showUpdateAlert(String latestReleaseHtmlLink, String latestReleaseDescription) {
+        Hyperlink hyperlink = new Hyperlink("Click here to download");
+        hyperlink.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().browse(new URI(latestReleaseHtmlLink));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Platform.runLater(() -> {
+            Alert alert = createAlert(Alert.AlertType.INFORMATION, "Information");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.setHeaderText("New version is now available");
+
+            alert.getDialogPane().setContent(hyperlink);
+            alert.getDialogPane().setContent(new TextArea(latestReleaseDescription));
+
+            alert.showAndWait();
+        });
     }
 
     public void showWarningAlert(String alertHeader, String alertMessage) {

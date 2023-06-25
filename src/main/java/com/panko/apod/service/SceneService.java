@@ -18,7 +18,6 @@ import java.util.Objects;
 
 // TODO refactor this class, should be min number of .load calls
 public class SceneService {
-
     public static final String SCENE_ABOUT = "/scene/about.fxml";
     public static final String SCENE_ROOT = "/scene/root-scene.fxml";
     public static final String SCENE_LOADING = "/scene/loading-scene.fxml";
