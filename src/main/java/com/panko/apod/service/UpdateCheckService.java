@@ -1,15 +1,14 @@
 package com.panko.apod.service;
 
-import com.panko.apod.entity.SceneController;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Properties;
 
-public class UpdateCheckService implements SceneController {
+public class UpdateCheckService {
     private static final String GITHUB_RELEASES_ENDPOINT =
             "https://api.github.com/repos/artsiom-panko/AstronomyPictureOfTheDay/releases/latest";
-
-    private SceneService sceneService;
 
     /**
      * View the latest published full release for the repository.
@@ -18,27 +17,24 @@ public class UpdateCheckService implements SceneController {
      * sorted by the created_at attribute.The created_at attribute is the date of the commit
      * used for the release, and not the date when the release was drafted or published.
      */
-    public boolean ifNewVersionAvailable() {
+    public void showNewUpdateIfAvailable() throws IOException {
         HttpResponse<String> httpResponse = new ApiService().sendHttpGetRequest(GITHUB_RELEASES_ENDPOINT);
         JSONObject responseBody = new JSONObject(httpResponse.body());
         String latestReleaseVersionName = responseBody.getString("name");
         String latestReleaseHtmlLink = responseBody.getString("html_url");
         String latestReleaseDescription = responseBody.getString("body");
 
+        double currentAppVersion = getCurrentAppVersion();
         double gitHubVersion = Double.parseDouble(latestReleaseVersionName.replaceAll("[a-zA-Z-]+", ""));
-        // TODO implement getting current project version
-        double currentAppVersion = 0.8d;
 
         if (gitHubVersion > currentAppVersion) {
             new AlertService().showUpdateAlert(latestReleaseHtmlLink, latestReleaseDescription);
-            return true;
-        } else {
-            return false;
         }
     }
 
-    @Override
-    public void setSceneService(SceneService sceneService) {
-        this.sceneService = sceneService;
+    private double getCurrentAppVersion() throws IOException {
+        Properties properties = new Properties();
+        properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
+        return Double.parseDouble(properties.getProperty("project.version"));
     }
 }

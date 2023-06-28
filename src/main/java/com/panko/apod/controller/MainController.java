@@ -51,21 +51,21 @@ public class MainController implements SceneController {
 
         new Thread(() -> {
             try {
+                System.out.println("1. " + Thread.currentThread());
                 HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
                 Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
 
                 pictureSaver.savePictureToFolder(picture);
 
                 WallpaperChanger.setScreenImage(picture);
+
                 Platform.runLater(() -> {
+                    System.out.println("2. " + Thread.currentThread());
                     sceneService.showPictureDescriptionScene(picture);
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
 
-                    // TODO refactor UpdateCheckService block
-                    UpdateCheckService updateCheckService = new UpdateCheckService();
-                    updateCheckService.setSceneService(sceneService);
-                    updateCheckService.ifNewVersionAvailable();
+                    new UpdateCheckService().showNewUpdateIfAvailable();
                 });
 
             } catch (Exception exception) {
@@ -73,6 +73,7 @@ public class MainController implements SceneController {
                         "Unknown error", exception);
             }
         }).start();
+        System.out.println("3. " + Thread.currentThread());
     }
 
     // TODO Split to two separate methods

@@ -41,6 +41,9 @@ mvn clean package
 Run the next command manually
 ```
 mvn clean package jpackage:jpackage
+
+
+mvn process-resources
 ```
 
 ## TO-DO plans
@@ -49,7 +52,7 @@ mvn clean package jpackage:jpackage
 - ☐ Fix all the Critical sonarlint issues
 - ☐ Fix all TO-DO's
 - ☐ Add saving logs to folder
-- ☐ Add update checker
+- ☑ Add update checker
 - ☐ Add version number to the 'about' window
 - ☐ (optional) Add number of launches
 - ☐ (optional) Add multi languages support
