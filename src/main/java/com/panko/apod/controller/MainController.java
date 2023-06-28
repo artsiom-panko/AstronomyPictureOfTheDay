@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class MainController implements SceneController {
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
 
-                    new UpdateCheckService().showNewUpdateIfAvailable();
+//                    new UpdateCheckService().showNewUpdateIfAvailable();
                 });
 
             } catch (Exception exception) {
@@ -105,7 +106,7 @@ public class MainController implements SceneController {
     }
 
     @FXML
-    private void showAboutAlert() {
+    private void showAboutAlert() throws IOException {
         alertService.showAboutAlert();
     }
 

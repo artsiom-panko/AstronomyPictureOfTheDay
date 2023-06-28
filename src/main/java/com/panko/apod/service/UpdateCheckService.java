@@ -32,9 +32,10 @@ public class UpdateCheckService {
         }
     }
 
-    private double getCurrentAppVersion() throws IOException {
+    public Double getCurrentAppVersion() throws IOException {
         Properties properties = new Properties();
         properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
+
         return Double.parseDouble(properties.getProperty("project.version"));
     }
 }
