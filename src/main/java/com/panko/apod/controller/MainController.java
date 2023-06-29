@@ -66,7 +66,7 @@ public class MainController implements SceneController {
                     updateAndShowLaunchesCounter();
                     infoBlock.setVisible(true);
 
-//                    new UpdateCheckService().showNewUpdateIfAvailable();
+                    new UpdateCheckService().showNewUpdateIfAvailable();
                 });
 
             } catch (Exception exception) {

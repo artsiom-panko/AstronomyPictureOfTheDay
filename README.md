@@ -54,6 +54,7 @@ mvn process-resources
 - ☐ Fix all the Critical sonarlint issues
 - ☐ Fix all TO-DO's
 - ☐ Add saving logs to folder
+- ☐ Add crash report sending
 - ☐ (optional) Add number of launches
 - ☐ (optional) Add multi languages support
 - ☐ (optional) Get rid of App installer and switch to executable file (download and use)

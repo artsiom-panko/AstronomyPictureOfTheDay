@@ -10,6 +10,7 @@ public class UpdateCheckService {
     private static final String GITHUB_RELEASES_ENDPOINT =
             "https://api.github.com/repos/artsiom-panko/AstronomyPictureOfTheDay/releases/latest";
 
+    // TODO Update method's description
     /**
      * View the latest published full release for the repository.
      *
@@ -17,7 +18,7 @@ public class UpdateCheckService {
      * sorted by the created_at attribute.The created_at attribute is the date of the commit
      * used for the release, and not the date when the release was drafted or published.
      */
-    public void showNewUpdateIfAvailable() throws IOException {
+    public void showNewUpdateIfAvailable() {
         HttpResponse<String> httpResponse = new ApiService().sendHttpGetRequest(GITHUB_RELEASES_ENDPOINT);
         JSONObject responseBody = new JSONObject(httpResponse.body());
         String latestReleaseVersionName = responseBody.getString("name");
@@ -32,9 +33,15 @@ public class UpdateCheckService {
         }
     }
 
-    public Double getCurrentAppVersion() throws IOException {
+    public Double getCurrentAppVersion() {
         Properties properties = new Properties();
-        properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
+        try {
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
+        } catch (IOException exception) {
+            new AlertService().showWarningAlert("Cannot get Application version. " +
+                    "You can get the latest version on Github page", exception);
+            return 999d;
+        }
 
         return Double.parseDouble(properties.getProperty("project.version"));
     }

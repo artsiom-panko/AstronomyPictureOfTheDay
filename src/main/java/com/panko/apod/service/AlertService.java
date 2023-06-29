@@ -1,8 +1,6 @@
 package com.panko.apod.service;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
@@ -27,7 +25,7 @@ public class AlertService {
     private final SceneService sceneService = new SceneService();
 
     // TODO hyperlinks are not working :(
-    public void showAboutAlert() throws IOException {
+    public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
 
         Pane aboutScene = sceneService.getScenePane(SCENE_ABOUT);
@@ -72,33 +70,30 @@ public class AlertService {
         });
     }
 
+    public void showWarningAlert(String alertHeader, Exception exception) {
+        Platform.runLater(() -> {
+            Alert alert = createAlert(Alert.AlertType.WARNING, "Warning");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+            setStacktraceInfo(alert, alertHeader, exception);
+
+            alert.showAndWait();
+        });
+    }
+
     public void showErrorAlertAndCloseApp(String errorMessage, Exception exception) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.ERROR, "Error");
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
-            alert.setHeaderText(errorMessage);
-
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(stringWriter);
-            exception.printStackTrace(printWriter);
-
-            TextArea textArea = new TextArea(stringWriter.toString());
-            textArea.setEditable(false);
-            textArea.setWrapText(true);
-
-            GridPane expContent = new GridPane();
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(textArea, 0, 0);
-
-            alert.getDialogPane().setExpandableContent(expContent);
+            setStacktraceInfo(alert, errorMessage, exception);
 
             alert.showAndWait();
             Platform.exit();
         });
     }
 
-    public Alert createAlert(Alert.AlertType alertType, String alertTitle) {
+    private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
         Alert alert = new Alert(alertType);
         alert.setTitle(alertTitle);
 
@@ -107,5 +102,23 @@ public class AlertService {
         stage.getIcons().add(logo);
 
         return alert;
+    }
+
+    private void setStacktraceInfo(Alert alert, String errorMessage, Exception exception) {
+        alert.setHeaderText(errorMessage);
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        exception.printStackTrace(printWriter);
+
+        TextArea textArea = new TextArea(stringWriter.toString());
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(textArea, 0, 0);
+
+        alert.getDialogPane().setExpandableContent(expContent);
     }
 }
