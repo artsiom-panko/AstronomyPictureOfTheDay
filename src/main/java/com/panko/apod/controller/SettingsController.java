@@ -2,7 +2,7 @@ package com.panko.apod.controller;
 
 import com.panko.apod.entity.SceneController;
 import com.panko.apod.service.AlertService;
-import com.panko.apod.service.ApiService;
+import com.panko.apod.service.HttpRequestService;
 import com.panko.apod.service.SceneService;
 import com.panko.apod.util.PreferencesManager;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,14 +21,13 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
 
-import static com.panko.apod.util.PreferencesManager.*;
+import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
+import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
 public class SettingsController implements Initializable, SceneController {
 
     @FXML
     private TextField apiKeyField;
-    @FXML
-    private ToggleGroup languageGroup;
 
     private SceneService sceneService;
 
@@ -57,7 +55,6 @@ public class SettingsController implements Initializable, SceneController {
         if (isEnteredApiKeyValid(apiKeyField)) {
             preferencesManager.saveKey(PICTURES_FOLDER, picturesPath);
             preferencesManager.saveKey(NASA_API_KEY, apiKeyField.getText());
-//        preferencesManager.saveKey(LANGUAGE, ((RadioButton) languageGroup.getSelectedToggle()).getText());
 
             sceneService.launchMainThread();
         } else {
@@ -83,8 +80,8 @@ public class SettingsController implements Initializable, SceneController {
             return false;
         }
 
-        ApiService apiService = new ApiService();
-        HttpResponse<String> httpResponse = apiService.sendHttpRequest(enteredApiKeyValue);
+        HttpRequestService httpRequestService = new HttpRequestService();
+        HttpResponse<String> httpResponse = httpRequestService.sendHttpGetRequestToNasa(enteredApiKeyValue);
 
         return !httpResponse.body().contains("API_KEY_INVALID");
     }

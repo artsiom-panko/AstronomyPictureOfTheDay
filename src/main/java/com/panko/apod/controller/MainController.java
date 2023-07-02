@@ -27,11 +27,11 @@ public class MainController implements SceneController {
 
     private SceneService sceneService;
 
-    private final ApiService apiService = new ApiService();
+    private final HttpRequestService httpRequestService = new HttpRequestService();
     private final PictureSaver pictureSaver = new PictureSaver();
     private final AlertService alertService = new AlertService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
-    private final HttpResponseParsingService httpResponseParsingService = new HttpResponseParsingService();
+    private final HttpResponseService httpResponseService = new HttpResponseService();
 
     private static final System.Logger logger = System.getLogger(MainController.class.getName());
 
@@ -53,8 +53,8 @@ public class MainController implements SceneController {
         new Thread(() -> {
             try {
                 System.out.println("1. " + Thread.currentThread());
-                HttpResponse<String> httpResponse = apiService.sendHttpRequest(apiKey);
-                Picture picture = httpResponseParsingService.parseHttpResponseToPicture(httpResponse);
+                HttpResponse<String> httpResponse = httpRequestService.sendHttpGetRequestToNasa(apiKey);
+                Picture picture = httpResponseService.parseHttpResponseToPicture(httpResponse);
 
                 pictureSaver.savePictureToFolder(picture);
 

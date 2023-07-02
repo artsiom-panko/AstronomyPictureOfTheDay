@@ -19,7 +19,7 @@ public class UpdateCheckService {
      * used for the release, and not the date when the release was drafted or published.
      */
     public void showNewUpdateIfAvailable() {
-        HttpResponse<String> httpResponse = new ApiService().sendHttpGetRequest(GITHUB_RELEASES_ENDPOINT);
+        HttpResponse<String> httpResponse = new HttpRequestService().sendHttpGetRequest(GITHUB_RELEASES_ENDPOINT);
         JSONObject responseBody = new JSONObject(httpResponse.body());
         String latestReleaseVersionName = responseBody.getString("name");
         String latestReleaseHtmlLink = responseBody.getString("html_url");
