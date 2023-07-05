@@ -41,9 +41,6 @@ mvn clean package
 Run the next command manually
 ```
 mvn clean package jpackage:jpackage
-
-
-mvn process-resources
 ```
 
 ## TO-DO plans

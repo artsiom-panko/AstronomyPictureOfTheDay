@@ -33,6 +33,9 @@ public class AlertService {
         textNode.setText("Version: " + new UpdateCheckService().getCurrentAppVersion().toString());
 
         alert.getDialogPane().setContent(aboutScene);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+
         alert.showAndWait();
     }
 
@@ -42,6 +45,7 @@ public class AlertService {
             try {
                 Desktop.getDesktop().browse(new URI(latestReleaseHtmlLink));
             } catch (IOException | URISyntaxException e) {
+                // TODO
                 throw new RuntimeException(e);
             }
         });
