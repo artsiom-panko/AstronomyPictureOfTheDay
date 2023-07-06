@@ -33,14 +33,14 @@ public class UpdateCheckService {
         }
     }
 
-    public Double getCurrentAppVersion() {
+    public double getCurrentAppVersion() {
         Properties properties = new Properties();
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException exception) {
             new AlertService().showWarningAlert("Cannot get Application version. " +
                     "You can get the latest version on Github page", exception);
-            return 999d;
+            return 9999d;
         }
 
         return Double.parseDouble(properties.getProperty("project.version"));

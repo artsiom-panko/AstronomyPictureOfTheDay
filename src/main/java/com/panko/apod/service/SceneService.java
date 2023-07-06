@@ -3,8 +3,8 @@ package com.panko.apod.service;
 import com.panko.apod.MainApplication;
 import com.panko.apod.controller.MainController;
 import com.panko.apod.controller.PictureDescriptionController;
+import com.panko.apod.controller.SettingsController;
 import com.panko.apod.entity.Picture;
-import com.panko.apod.entity.SceneController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -61,18 +61,6 @@ public class SceneService {
         }
     }
 
-    public SceneController getSceneController(String scenePath) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(MainApplication.class.getResource(scenePath));
-
-        try {
-            loader.load();
-            return loader.getController();
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
-    }
-
     public void showScene(String scenePath) {
         VBox vBox;
         FXMLLoader loader = new FXMLLoader();
@@ -80,11 +68,11 @@ public class SceneService {
 
         try {
             vBox = loader.load();
-            SceneController controller = loader.getController();
-
-            if (controller != null) {
-                controller.setSceneService(this);
-            }
+//            SceneController controller = loader.getController();
+//
+//            if (controller != null) {
+//                controller.setSceneService(this);
+//            }
 
         } catch (IOException e) {
             throw new RuntimeException();
@@ -102,6 +90,21 @@ public class SceneService {
 
             PictureDescriptionController pictureDescriptionController = loader.getController();
             pictureDescriptionController.showPictureDescription(picture);
+
+            mainPane.setCenter(vboxContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSettingsScene() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource(SceneService.SCENE_SETTINGS));
+            Pane vboxContainer = loader.load();
+
+            SettingsController settingsController = loader.getController();
+            settingsController.setSceneService(this);
 
             mainPane.setCenter(vboxContainer);
         } catch (IOException e) {

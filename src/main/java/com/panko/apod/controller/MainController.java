@@ -1,7 +1,6 @@
 package com.panko.apod.controller;
 
 import com.panko.apod.entity.Picture;
-import com.panko.apod.entity.SceneController;
 import com.panko.apod.service.*;
 import com.panko.apod.util.PictureSaver;
 import com.panko.apod.util.PreferencesManager;
@@ -17,8 +16,7 @@ import java.util.Optional;
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
 import static com.panko.apod.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
 
-public class MainController implements SceneController {
-
+public class MainController {
     @FXML
     private HBox infoBlock;
     @FXML
@@ -32,13 +30,12 @@ public class MainController implements SceneController {
     private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseService httpResponseService = new HttpResponseService();
 
-    private static final System.Logger logger = System.getLogger(MainController.class.getName());
-
     public void launchMainThread() {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
-            sceneService.showScene(SceneService.SCENE_SETTINGS);
+//            sceneService.showScene(SceneService.SCENE_SETTINGS);
+            sceneService.showSettingsScene();
         } else {
             proceedMainThread(apiKey);
         }
@@ -101,7 +98,8 @@ public class MainController implements SceneController {
 
     @FXML
     public void showSettingsScene() {
-        sceneService.showScene(SceneService.SCENE_SETTINGS);
+//        sceneService.showScene(SceneService.SCENE_SETTINGS);
+        sceneService.showSettingsScene();
     }
 
     @FXML
@@ -109,7 +107,6 @@ public class MainController implements SceneController {
         alertService.showAboutAlert();
     }
 
-    @Override
     public void setSceneService(SceneService sceneService) {
         this.sceneService = sceneService;
     }

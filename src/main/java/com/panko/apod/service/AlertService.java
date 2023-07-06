@@ -30,7 +30,7 @@ public class AlertService {
 
         Pane aboutScene = sceneService.getScenePane(SCENE_ABOUT);
         Text textNode = (Text) aboutScene.lookup("#versionValue");
-        textNode.setText("Version: " + new UpdateCheckService().getCurrentAppVersion().toString());
+        textNode.setText("Version: " + new UpdateCheckService().getCurrentAppVersion());
 
         alert.getDialogPane().setContent(aboutScene);
         alert.setHeaderText(null);

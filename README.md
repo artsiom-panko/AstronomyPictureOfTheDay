@@ -50,8 +50,7 @@ mvn clean package jpackage:jpackage
 - ☑ Add version number to the 'about' window
 - ☐ Fix all the Critical sonarlint issues
 - ☐ Fix all TO-DO's
-- ☐ Add saving logs to folder
-- ☐ Add crash report sending
+- ☐ (optional) Add crash report sending by email
 - ☐ (optional) Add number of launches
 - ☐ (optional) Add multi languages support
 - ☐ (optional) Get rid of App installer and switch to executable file (download and use)

@@ -1,6 +1,5 @@
 package com.panko.apod.controller;
 
-import com.panko.apod.entity.SceneController;
 import com.panko.apod.service.AlertService;
 import com.panko.apod.service.HttpRequestService;
 import com.panko.apod.service.SceneService;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
 import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
 
-public class SettingsController implements Initializable, SceneController {
+public class SettingsController implements Initializable {
 
     @FXML
     private TextField apiKeyField;
@@ -52,7 +51,7 @@ public class SettingsController implements Initializable, SceneController {
         Path applicationAbsolutePath = FileSystems.getDefault().getPath("").toAbsolutePath();
         String picturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
 
-        if (isEnteredApiKeyValid(apiKeyField)) {
+        if (isApiKeyValid(apiKeyField)) {
             preferencesManager.saveKey(PICTURES_FOLDER, picturesPath);
             preferencesManager.saveKey(NASA_API_KEY, apiKeyField.getText());
 
@@ -61,16 +60,16 @@ public class SettingsController implements Initializable, SceneController {
             new AlertService().showWarningAlert("Invalid API key",
                     "Provided API key is wrong or disabled. Please, double-check entered API key or generate a new one.");
 
-            sceneService.showScene(SceneService.SCENE_SETTINGS);
+//            sceneService.showScene(SceneService.SCENE_SETTINGS);
+            sceneService.showSettingsScene();
         }
     }
 
-    @Override
     public void setSceneService(SceneService sceneService) {
         this.sceneService = sceneService;
     }
 
-    private boolean isEnteredApiKeyValid(TextField apiKeyToCheck) {
+    private boolean isApiKeyValid(TextField apiKeyToCheck) {
         if (apiKeyToCheck == null) {
             return false;
         }
