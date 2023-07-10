@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
-import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
+import static com.panko.apod.util.PreferencesManager.APP_ABSOLUTE_PATH;
 
 public class SettingsController implements Initializable {
 
@@ -52,7 +52,7 @@ public class SettingsController implements Initializable {
         String picturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
 
         if (isApiKeyValid(apiKeyField)) {
-            preferencesManager.saveKey(PICTURES_FOLDER, picturesPath);
+            preferencesManager.saveKey(APP_ABSOLUTE_PATH, picturesPath);
             preferencesManager.saveKey(NASA_API_KEY, apiKeyField.getText());
 
             sceneService.launchMainThread();
@@ -79,8 +79,7 @@ public class SettingsController implements Initializable {
             return false;
         }
 
-        HttpRequestService httpRequestService = new HttpRequestService();
-        HttpResponse<String> httpResponse = httpRequestService.sendHttpGetRequestToNasa(enteredApiKeyValue);
+        HttpResponse<String> httpResponse = new HttpRequestService().sendHttpGetRequestToNasa(enteredApiKeyValue);
 
         return !httpResponse.body().contains("API_KEY_INVALID");
     }

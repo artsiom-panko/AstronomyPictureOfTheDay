@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.Optional;
 
 import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
-import static com.panko.apod.util.PreferencesManager.NUMBER_OF_ROCKET_LAUNCHES;
+import static com.panko.apod.util.PreferencesManager.NUMBER_OF_APP_LAUNCHES;
 
 public class MainController {
     @FXML
@@ -76,13 +76,13 @@ public class MainController {
     // TODO Split to two separate methods
     private void updateAndShowLaunchesCounter() {
         String numberOfLaunches = Optional
-                .ofNullable(preferencesManager.readKey(NUMBER_OF_ROCKET_LAUNCHES))
+                .ofNullable(preferencesManager.readKey(NUMBER_OF_APP_LAUNCHES))
                 .orElse("0");
 
         String incrementedNumberOfLaunches = String.valueOf(Integer.parseInt(numberOfLaunches) + 1);
 
         preferencesManager.saveKey(
-                NUMBER_OF_ROCKET_LAUNCHES,
+                NUMBER_OF_APP_LAUNCHES,
                 incrementedNumberOfLaunches);
 
         showLaunchesCounter();
@@ -90,7 +90,7 @@ public class MainController {
 
     private void showLaunchesCounter() {
         String numberOfLaunches = Optional
-                .ofNullable(preferencesManager.readKey(NUMBER_OF_ROCKET_LAUNCHES))
+                .ofNullable(preferencesManager.readKey(NUMBER_OF_APP_LAUNCHES))
                 .orElse("0");
 
         numberOfRocketLaunches.setText(String.format("Rocket launches: %s", numberOfLaunches));

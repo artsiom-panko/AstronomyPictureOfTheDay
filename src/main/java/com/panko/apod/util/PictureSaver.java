@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.panko.apod.util.PreferencesManager.PICTURES_FOLDER;
+import static com.panko.apod.util.PreferencesManager.APP_ABSOLUTE_PATH;
 
 public class PictureSaver {
     private final AlertService alertService = new AlertService();
@@ -23,7 +23,7 @@ public class PictureSaver {
 
             String[] splitUrl = picture.getImgUrl().split("/");
             String fileName = splitUrl[splitUrl.length - 1];
-            String absolutePath = preferencesManager.readKey(PICTURES_FOLDER)
+            String absolutePath = preferencesManager.readKey(APP_ABSOLUTE_PATH)
                     .concat(fileName);
             picture.setLocalPath(absolutePath);
 

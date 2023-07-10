@@ -3,14 +3,14 @@ package com.panko.apod.util;
 import java.util.prefs.Preferences;
 
 public class PreferencesManager {
-    public static final String LANGUAGE = "language";
-    public static final String NASA_API_KEY = "nasa.api.key";
-    public static final String PICTURES_FOLDER = "folder";
-    public static final String NUMBER_OF_ROCKET_LAUNCHES = "apod.numberofrocketlaunches";
+    public static final String APP_LANGUAGE = "appLanguage";
+    public static final String NASA_API_KEY = "nasaApiKey";
+    public static final String APP_ABSOLUTE_PATH = "appAbsolutePath";
+    public static final String NUMBER_OF_APP_LAUNCHES = "numberOfAppLaunches";
 
     private static final System.Logger logger = System.getLogger(PreferencesManager.class.getName());
 
-    private final Preferences preferences = Preferences.userRoot().node("astronomy_picture_of_the_day");
+    private final Preferences preferences = Preferences.userRoot().node(this.getClass().getName());
 
     public String readKey(String key) {
         logger.log(System.Logger.Level.INFO, "Read property by key: " + key);
