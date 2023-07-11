@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -24,13 +23,9 @@ import static com.panko.apod.service.SceneService.SCENE_ABOUT;
 public class AlertService {
     private final SceneService sceneService = new SceneService();
 
-    // TODO hyperlinks are not working :(
     public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
-
         Pane aboutScene = sceneService.getScenePane(SCENE_ABOUT);
-        Text textNode = (Text) aboutScene.lookup("#versionValue");
-        textNode.setText("Version: " + new UpdateCheckService().getCurrentAppVersion());
 
         alert.getDialogPane().setContent(aboutScene);
         alert.setHeaderText(null);

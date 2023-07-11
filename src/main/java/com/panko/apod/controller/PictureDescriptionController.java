@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 
 public class PictureDescriptionController {
-
     @FXML
     private Text pictureTitle;
     @FXML

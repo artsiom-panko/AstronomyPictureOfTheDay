@@ -11,7 +11,8 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="232.0"
-            prefWidth="661.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+            prefWidth="661.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.panko.apod.controller.AboutController">
     <left>
         <ImageView fitHeight="104.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"
                    BorderPane.alignment="TOP_LEFT">
@@ -56,7 +57,7 @@
                         <Font size="14.0"/>
                     </font>
                 </Text>
-                <Hyperlink prefHeight="26.0" prefWidth="414.0"
+                <Hyperlink prefHeight="26.0" prefWidth="414.0" onAction="#openHyperlink"
                            text="https://github.com/artsiom-panko/AstronomyPictureOfTheDay">
                     <font>
                         <Font size="14.0"/>
@@ -72,7 +73,8 @@
                         <Font size="14.0"/>
                     </font>
                 </Text>
-                <Hyperlink text="https://api.nasa.gov/">
+                <Hyperlink onAction="#openHyperlink"
+                           text="https://api.nasa.gov/">
                     <font>
                         <Font size="14.0"/>
                     </font>
@@ -87,7 +89,8 @@
                         <Font size="14.0"/>
                     </font>
                 </Text>
-                <Hyperlink text="https://apod.nasa.gov/apod/archivepix.html">
+                <Hyperlink onAction="#openHyperlink"
+                           text="https://apod.nasa.gov/apod/archivepix.html">
                     <font>
                         <Font size="14.0"/>
                     </font>

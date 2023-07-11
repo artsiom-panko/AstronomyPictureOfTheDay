@@ -24,7 +24,6 @@ import static com.panko.apod.util.PreferencesManager.NASA_API_KEY;
 import static com.panko.apod.util.PreferencesManager.APP_ABSOLUTE_PATH;
 
 public class SettingsController implements Initializable {
-
     @FXML
     private TextField apiKeyField;
 
@@ -51,9 +50,11 @@ public class SettingsController implements Initializable {
         Path applicationAbsolutePath = FileSystems.getDefault().getPath("").toAbsolutePath();
         String picturesPath = applicationAbsolutePath.toString().concat("\\pictures\\");
 
-        if (isApiKeyValid(apiKeyField)) {
+        String apiKey = apiKeyField.getText();
+
+        if (isApiKeyValid(apiKey)) {
             preferencesManager.saveKey(APP_ABSOLUTE_PATH, picturesPath);
-            preferencesManager.saveKey(NASA_API_KEY, apiKeyField.getText());
+            preferencesManager.saveKey(NASA_API_KEY, apiKey);
 
             sceneService.launchMainThread();
         } else {
@@ -69,17 +70,16 @@ public class SettingsController implements Initializable {
         this.sceneService = sceneService;
     }
 
-    private boolean isApiKeyValid(TextField apiKeyToCheck) {
-        if (apiKeyToCheck == null) {
+    private boolean isApiKeyValid(String apiKeyToCheck) {
+        if (apiKeyToCheck.isBlank()) {
             return false;
         }
 
-        String enteredApiKeyValue = apiKeyToCheck.getText();
-        if (!enteredApiKeyValue.isBlank() && !preferencesManager.readKey(NASA_API_KEY).equals(enteredApiKeyValue)) {
-            return false;
+        if (apiKeyToCheck.equals(preferencesManager.readKey(NASA_API_KEY))) {
+            return true;
         }
 
-        HttpResponse<String> httpResponse = new HttpRequestService().sendHttpGetRequestToNasa(enteredApiKeyValue);
+        HttpResponse<String> httpResponse = new HttpRequestService().sendHttpGetRequestToNasa(apiKeyToCheck);
 
         return !httpResponse.body().contains("API_KEY_INVALID");
     }

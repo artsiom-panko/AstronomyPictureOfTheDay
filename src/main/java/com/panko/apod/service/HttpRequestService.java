@@ -13,8 +13,12 @@ import java.time.Duration;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class HttpRequestService {
+    public static final String NASA_URI =
+            "https://api.nasa.gov/planetary/apod?";
+    public static final String GITHUB_RELEASES_ENDPOINT =
+            "https://api.github.com/repos/artsiom-panko/AstronomyPictureOfTheDay/releases/latest";
+
     private static final Logger logger = System.getLogger(HttpRequestService.class.getName());
-    private static final String NASA_URI = "https://api.nasa.gov/planetary/apod?";
 
     public HttpResponse<String> sendHttpGetRequestToNasa(String key) {
         return sendHttpGetRequest(NASA_URI + "api_key=" + key);

@@ -6,17 +6,18 @@ import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Properties;
 
-public class UpdateCheckService {
-    private static final String GITHUB_RELEASES_ENDPOINT =
-            "https://api.github.com/repos/artsiom-panko/AstronomyPictureOfTheDay/releases/latest";
+import static com.panko.apod.service.HttpRequestService.GITHUB_RELEASES_ENDPOINT;
 
-    // TODO Update method's description
+public class UpdateCheckService {
+
     /**
-     * View the latest published full release for the repository.
+     * Show Info-level alert message about the availability of a new app version if
+     * current app version is older.
      *
-     * <p>The latest release is the most recent non-prerelease, non-draft release,
-     * sorted by the created_at attribute.The created_at attribute is the date of the commit
-     * used for the release, and not the date when the release was drafted or published.
+     * <p> For comparison with the current version will be used the latest non-prerelease or non-draft release,
+     * sorted by the created_at attribute.
+     *
+     * <p> The current app version stores at pom.xml and in the application.properties for installed app.
      */
     public void showNewUpdateIfAvailable() {
         HttpResponse<String> httpResponse = new HttpRequestService().sendHttpGetRequest(GITHUB_RELEASES_ENDPOINT);
@@ -33,14 +34,14 @@ public class UpdateCheckService {
         }
     }
 
-    public double getCurrentAppVersion() {
+    public Double getCurrentAppVersion() {
         Properties properties = new Properties();
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException exception) {
             new AlertService().showWarningAlert("Cannot get Application version. " +
                     "You can get the latest version on Github page", exception);
-            return 9999d;
+            return null;
         }
 
         return Double.parseDouble(properties.getProperty("project.version"));

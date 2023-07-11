@@ -59,9 +59,9 @@ public class MainController {
                 Platform.runLater(() -> {
                     System.out.println("2. " + Thread.currentThread());
                     sceneService.showPictureDescriptionScene(picture);
-                    updateAndShowLaunchesCounter();
+                    incrementLaunchesCounter();
+                    showLaunchesCounter();
                     infoBlock.setVisible(true);
-
                     new UpdateCheckService().showNewUpdateIfAvailable();
                 });
 
@@ -73,8 +73,7 @@ public class MainController {
         System.out.println("3. " + Thread.currentThread());
     }
 
-    // TODO Split to two separate methods
-    private void updateAndShowLaunchesCounter() {
+    private void incrementLaunchesCounter() {
         String numberOfLaunches = Optional
                 .ofNullable(preferencesManager.readKey(NUMBER_OF_APP_LAUNCHES))
                 .orElse("0");
@@ -84,8 +83,6 @@ public class MainController {
         preferencesManager.saveKey(
                 NUMBER_OF_APP_LAUNCHES,
                 incrementedNumberOfLaunches);
-
-        showLaunchesCounter();
     }
 
     private void showLaunchesCounter() {
