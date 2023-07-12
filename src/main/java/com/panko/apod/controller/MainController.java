@@ -34,7 +34,6 @@ public class MainController {
         String apiKey = preferencesManager.readKey(NASA_API_KEY);
 
         if (apiKey == null || apiKey.isBlank()) {
-//            sceneService.showScene(SceneService.SCENE_SETTINGS);
             sceneService.showSettingsScene();
         } else {
             proceedMainThread(apiKey);
@@ -95,7 +94,6 @@ public class MainController {
 
     @FXML
     public void showSettingsScene() {
-//        sceneService.showScene(SceneService.SCENE_SETTINGS);
         sceneService.showSettingsScene();
     }
 

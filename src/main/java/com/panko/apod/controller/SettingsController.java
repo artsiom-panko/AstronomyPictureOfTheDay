@@ -60,8 +60,6 @@ public class SettingsController implements Initializable {
         } else {
             new AlertService().showWarningAlert("Invalid API key",
                     "Provided API key is wrong or disabled. Please, double-check entered API key or generate a new one.");
-
-//            sceneService.showScene(SceneService.SCENE_SETTINGS);
             sceneService.showSettingsScene();
         }
     }

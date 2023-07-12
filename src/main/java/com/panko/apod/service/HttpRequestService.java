@@ -32,6 +32,10 @@ public class HttpRequestService {
                     .GET()
                     .build();
 
+            if (true) {
+                throw new HttpTimeoutException("");
+            }
+
             logger.log(Logger.Level.INFO, "Request: {0}",
                     httpRequest.toString());
 
@@ -46,13 +50,9 @@ public class HttpRequestService {
         } catch (HttpTimeoutException | URISyntaxException exception) {
             new AlertService().showErrorAlertAndCloseApp(
                     "Picture service is not available now.\nPlease, try later", exception);
-        } catch (IOException exception) {
+        } catch (IOException | InterruptedException exception) {
             new AlertService().showErrorAlertAndCloseApp(
-                    "Unknown IOException exception.\nPlease, try later", exception);
-        } catch (InterruptedException exception) {
-            // TODO fix that catch
-            new AlertService().showErrorAlertAndCloseApp(
-                    "Unknown InterruptedException.\nPlease, try later", exception);
+                    "Unknown exception.\nPlease, try later", exception);
         }
 
         return null;
