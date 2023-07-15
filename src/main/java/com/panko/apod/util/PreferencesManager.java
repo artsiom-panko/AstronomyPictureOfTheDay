@@ -2,6 +2,15 @@ package com.panko.apod.util;
 
 import java.util.prefs.Preferences;
 
+/**
+ * PreferencesManager provides a way to save app configurations (preferences),
+ * for example user settings, api key, installed path, but not large data.
+ *
+ * <p> Preferences are key / values pairs where the key is an arbitrary name for the preference.
+ * The value can be a boolean, string, int of another primitive type.
+ *
+ * <p> The actual storage of the data is dependent on the platform.
+ */
 public class PreferencesManager {
     public static final String APP_LANGUAGE = "appLanguage";
     public static final String NASA_API_KEY = "nasaApiKey";

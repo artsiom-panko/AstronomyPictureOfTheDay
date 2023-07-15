@@ -23,6 +23,9 @@ import static com.panko.apod.service.SceneService.SCENE_ABOUT;
 public class AlertService {
     private final SceneService sceneService = new SceneService();
 
+    /**
+     * Shows Info-level alert window with "about" info: app version, author, links.
+     */
     public void showAboutAlert() {
         Alert alert = createAlert(Alert.AlertType.INFORMATION, "About Astronomy picture of the day");
         Pane aboutScene = sceneService.getScenePane(SCENE_ABOUT);
@@ -34,6 +37,11 @@ public class AlertService {
         alert.showAndWait();
     }
 
+    /**
+     * Shows Info-level alert message about the availability of a new app version.
+     *
+     * <p> Provides a link for new release downloading.
+     */
     public void showUpdateAlert(String latestReleaseHtmlLink, String latestReleaseDescription) {
         Hyperlink hyperlink = new Hyperlink("Click here to download");
         hyperlink.setOnAction(event -> {
@@ -57,6 +65,13 @@ public class AlertService {
         });
     }
 
+    /**
+     * Shows Warning-level alert message to notify user about non-critical app problems.
+     *
+     * <p> Provides detailed error message.
+     *
+     * <p> Doesn't stop app execution.
+     */
     public void showWarningAlert(String alertHeader, String alertMessage) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.WARNING, "Warning");
@@ -69,6 +84,13 @@ public class AlertService {
         });
     }
 
+    /**
+     * Shows Warning-level alert message to notify user about non-critical app problems.
+     *
+     * <p> Provides exception stack trace.
+     *
+     * <p> Doesn't stop app execution.
+     */
     public void showWarningAlert(String alertHeader, Exception exception) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.WARNING, "Warning");
@@ -80,6 +102,14 @@ public class AlertService {
         });
     }
 
+    /**
+     * Shows Error-level alert message to notify user about critical, major app problems,
+     * which make impossible to continue running the app.
+     *
+     * <p> Provides exception stack trace.
+     *
+     * <p> Stop app execution and close the app.
+     */
     public void showErrorAlertAndCloseApp(String errorMessage, Exception exception) {
         Platform.runLater(() -> {
             Alert alert = createAlert(Alert.AlertType.ERROR, "Error");
@@ -88,8 +118,8 @@ public class AlertService {
             setStacktraceInfo(alert, errorMessage, exception);
 
             alert.showAndWait();
-            Platform.exit();
         });
+        Thread.currentThread().stop();
     }
 
     private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
