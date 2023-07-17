@@ -68,12 +68,6 @@ public class SceneService {
 
         try {
             vBox = loader.load();
-//            SceneController controller = loader.getController();
-//
-//            if (controller != null) {
-//                controller.setSceneService(this);
-//            }
-
         } catch (IOException e) {
             throw new RuntimeException();
         }

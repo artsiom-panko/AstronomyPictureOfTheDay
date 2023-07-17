@@ -108,7 +108,7 @@ public class AlertService {
      *
      * <p> Provides exception stack trace.
      *
-     * <p> Stop app execution and close the app.
+     * <p> Stops app execution and close the app.
      */
     public void showErrorAlertAndCloseApp(String errorMessage, Exception exception) {
         Platform.runLater(() -> {
@@ -119,7 +119,7 @@ public class AlertService {
 
             alert.showAndWait();
         });
-        Thread.currentThread().stop();
+//        Thread.currentThread().stop();
     }
 
     private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
