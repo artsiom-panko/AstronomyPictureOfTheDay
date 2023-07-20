@@ -119,7 +119,8 @@ public class AlertService {
 
             alert.showAndWait();
         });
-//        Thread.currentThread().stop();
+        // TODO Make app close without the code below
+        Thread.currentThread().stop();
     }
 
     private Alert createAlert(Alert.AlertType alertType, String alertTitle) {
