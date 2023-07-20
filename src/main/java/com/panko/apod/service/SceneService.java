@@ -26,6 +26,7 @@ public class SceneService {
 
     private BorderPane mainPane;
     private MainController mainController;
+    private MainService mainService = new MainService();
 
     public void launchMainThread() {
         mainController.launchMainThread();

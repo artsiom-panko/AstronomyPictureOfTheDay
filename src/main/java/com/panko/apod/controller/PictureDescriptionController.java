@@ -11,6 +11,7 @@ public class PictureDescriptionController {
     @FXML
     private TextArea pictureDescription;
 
+    // TODO why do this method is been called from another service?!
     public void showPictureDescription(Picture picture) {
         pictureTitle.setText(picture.getTitle());
         pictureDescription.setText(picture

@@ -24,9 +24,11 @@ public class MainController {
 
     private SceneService sceneService;
 
-    private final HttpRequestService httpRequestService = new HttpRequestService();
+    private final MainService mainService = new MainService();
+
     private final PictureSaver pictureSaver = new PictureSaver();
     private final AlertService alertService = new AlertService();
+    private final HttpRequestService httpRequestService = new HttpRequestService();
     private final PreferencesManager preferencesManager = new PreferencesManager();
     private final HttpResponseService httpResponseService = new HttpResponseService();
 
@@ -43,7 +45,6 @@ public class MainController {
     public void proceedMainThread(String apiKey) {
         sceneService.showScene(SceneService.SCENE_LOADING);
         infoBlock.setVisible(false);
-        showLaunchesCounter();
 
         new Thread(() -> {
             try {
@@ -78,10 +79,7 @@ public class MainController {
                 .orElse("0");
 
         String incrementedNumberOfLaunches = String.valueOf(Integer.parseInt(numberOfLaunches) + 1);
-
-        preferencesManager.saveKey(
-                NUMBER_OF_APP_LAUNCHES,
-                incrementedNumberOfLaunches);
+        preferencesManager.saveKey(NUMBER_OF_APP_LAUNCHES, incrementedNumberOfLaunches);
     }
 
     private void showLaunchesCounter() {
